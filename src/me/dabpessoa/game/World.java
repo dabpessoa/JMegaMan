@@ -3,6 +3,7 @@ package me.dabpessoa.game;
 import me.dabpessoa.manager.ResourceManager;
 import me.dabpessoa.map.TileMap;
 import me.dabpessoa.map.TileMapRenderer;
+import me.dabpessoa.sprite.Cowboy;
 import me.dabpessoa.sprite.MegaMan;
 import me.dabpessoa.sprite.Sprite;
 
@@ -41,7 +42,14 @@ public class World {
         tileMapRenderer.setBackground(resourceManager.loadImage("background.png"));
 
         MegaMan megaMan = new MegaMan(this);
+        Cowboy cowboy = new Cowboy(this);
+
         setPlayer(megaMan);
+        addSprite(cowboy);
+//        setPlayer(cowboy);
+//        addSprite(megaMan);
+
+
 
     }
 
