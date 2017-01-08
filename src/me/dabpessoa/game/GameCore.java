@@ -67,7 +67,6 @@ public class GameCore implements LoopSteps {
         	Sprite sprite = ( Sprite ) iterator.next();
         	sprite.update(elapsedTime);
 		}
-		System.out.println(elapsedTime);
 		
 		//Grava o tempo na sa�da do m�todo.
 		previousTime = System.currentTimeMillis();

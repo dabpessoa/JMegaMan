@@ -18,8 +18,8 @@ public class MegaMan extends Sprite {
 	private Animation idleRightAnimation;
     private Animation jumpRightAnimation;
     
-    private boolean onGround = true;
-	private boolean turnedRight = true;
+    private boolean onGround;
+	private boolean turnedRight;
 
 	private World world;
 	
@@ -27,6 +27,8 @@ public class MegaMan extends Sprite {
 		super(world.getCanvas());
 		this.world = world;
 		this.setAnimation(getIdleRightAnimation());
+		turnedRight = true;
+		onGround = true;
 		init(world.getResourceManager());
 	}
 
@@ -39,30 +41,28 @@ public class MegaMan extends Sprite {
 	public void init(ResourceManager resourceManager) {
 
 		Animation runLeftAnimation = new Animation();
-		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/runleft/run1.png"), 80);
-		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/runleft/run2.png"), 80);
-		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/runleft/run3.png"), 80);
-		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/runleft/run4.png"), 80);
-		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/runleft/run5.png"), 80);
-		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/runleft/run6.png"), 80);
-		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/runleft/run7.png"), 80);
-		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/runleft/run8.png"), 80);
-		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/runleft/run9.png"), 80);
-		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/runleft/run10.png"), 80);
-
-
+		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/run/left/run1.png"), 80);
+		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/run/left/run2.png"), 80);
+		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/run/left/run3.png"), 80);
+		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/run/left/run4.png"), 80);
+		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/run/left/run5.png"), 80);
+		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/run/left/run6.png"), 80);
+		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/run/left/run7.png"), 80);
+		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/run/left/run8.png"), 80);
+		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/run/left/run9.png"), 80);
+		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/run/left/run10.png"), 80);
 
 		Animation runRightAnimation = new Animation();
-		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run1.png"), 80);
-		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run2.png"), 80);
-		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run3.png"), 80);
-		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run4.png"), 80);
-		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run5.png"), 80);
-		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run6.png"), 80);
-		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run7.png"), 80);
-		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run8.png"), 80);
-		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run9.png"), 80);
-		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run10.png"), 80);
+		runRightAnimation.addFrame(resourceManager.loadImage("megaman/run/right/run1.png"), 80);
+		runRightAnimation.addFrame(resourceManager.loadImage("megaman/run/right/run2.png"), 80);
+		runRightAnimation.addFrame(resourceManager.loadImage("megaman/run/right/run3.png"), 80);
+		runRightAnimation.addFrame(resourceManager.loadImage("megaman/run/right/run4.png"), 80);
+		runRightAnimation.addFrame(resourceManager.loadImage("megaman/run/right/run5.png"), 80);
+		runRightAnimation.addFrame(resourceManager.loadImage("megaman/run/right/run6.png"), 80);
+		runRightAnimation.addFrame(resourceManager.loadImage("megaman/run/right/run7.png"), 80);
+		runRightAnimation.addFrame(resourceManager.loadImage("megaman/run/right/run8.png"), 80);
+		runRightAnimation.addFrame(resourceManager.loadImage("megaman/run/right/run9.png"), 80);
+		runRightAnimation.addFrame(resourceManager.loadImage("megaman/run/right/run10.png"), 80);
 
 		Animation idleRightAnimation = new Animation();
 		idleRightAnimation.addFrame(resourceManager.loadImage("megaman/idle/right/idle1.png"), 2000);
@@ -81,16 +81,16 @@ public class MegaMan extends Sprite {
 		idleLeftAnimation.addFrame(resourceManager.loadImage("megaman/idle/left/idle6.png"), 1650);
 
 		Animation jumpRightAnimation = new Animation();
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump1.png"), 80);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump2.png"), 80);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump3.png"), 80);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump4.png"), 80);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump5.png"), 80);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump6.png"), 80);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump7.png"), 80);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump8.png"), 80);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump9.png"), 80);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump10.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump1.png"), 200);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump2.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump3.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump4.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump5.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump6.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump7.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump8.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump9.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump10.png"), 80);
 
 		this.setIdleLeftAnimation(idleLeftAnimation);
 		this.setIdleRightAnimation(idleRightAnimation);
@@ -112,10 +112,15 @@ public class MegaMan extends Sprite {
 		
 		//A gravidade afeta o sprite
 		this.setVelocityY(this.getVelocityY() + (GRAVITY * elapsedTime));
-		
+
+		if (!isJumping()) {
+			getJumpRightAnimation().start();
+		}
+
 		// Seleciona a anima��o correta
 //		if (isJumping()) {
-//			this.setAnimation(getJumpRightAnimation());
+//			if (isTurnedRight()) this.setAnimation(getJumpRightAnimation());
+//			else this.setAnimation(getJumpRightAnimation());
 //		} else
 		if ( getVelocityX() == 0 ) {
 			if (isTurnedRight()) this.setAnimation(getIdleRightAnimation());
@@ -127,7 +132,7 @@ public class MegaMan extends Sprite {
 			setTurnedRight(false);
 			this.setAnimation(getRunLeftAnimation());
 		}
-		 
+
 		// altera x
         float dx = this.getVelocityX();
         float oldX = this.getX();
