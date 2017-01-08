@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.util.Iterator;
 
+import me.dabpessoa.core.World;
 import me.dabpessoa.sprite.Sprite;
 
 public class TileMapRenderer {
@@ -12,10 +13,12 @@ public class TileMapRenderer {
 	private static final int TILE_SIZE = 32;
     private static final int TILE_SIZE_BITS = 5;
     private Image background;
+
+    private World world;
     
-    public TileMapRenderer() {
-		// TODO Auto-generated constructor stub
-	}
+    public TileMapRenderer(World world) {
+        this.world = world;
+    }
     
     /**
      * Converte uma posi��o em pixel para a posi��o de um tile.
@@ -69,7 +72,7 @@ public class TileMapRenderer {
         
         // obt�m a posi��o de scrolling do mapa, baseado na posi��o do jogador
         int offsetX = screenWidth / 2 -
-                Math.round( map.getPlayer().getX() ) - TILE_SIZE;
+                Math.round( world.getPlayer().getX() ) - TILE_SIZE;
         offsetX = Math.min( offsetX, 0 );
         offsetX = Math.max( offsetX, screenWidth - mapWidth );
 //        int offsetX = screenWidth - tilesToPixels(map.getWidth()); 
@@ -119,13 +122,13 @@ public class TileMapRenderer {
         }
         
         // desenha o jogador
-        g.drawImage( map.getPlayer().getAnimation().getImage(),
-                Math.round( map.getPlayer().getX() ) + offsetX,
-                Math.round( map.getPlayer().getY() ) + offsetY,
+        g.drawImage( world.getPlayer().getAnimation().getImage(),
+                Math.round( world.getPlayer().getX() ) + offsetX,
+                Math.round( world.getPlayer().getY() ) + offsetY,
                 null );
         
         // desenha as sprites
-        Iterator<Sprite> i = map.getSprites();
+        Iterator<Sprite> i = world.getSprites();
         while ( i.hasNext() ) {
             Sprite sprite = ( Sprite ) i.next();
             int x = Math.round( sprite.getX() ) + offsetX;

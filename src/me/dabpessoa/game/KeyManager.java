@@ -1,4 +1,4 @@
-package me.dabpessoa.core;
+package me.dabpessoa.game;
 
 import java.awt.Component;
 import java.awt.event.KeyEvent;

@@ -1,4 +1,4 @@
-package me.dabpessoa.game;
+package me.dabpessoa.gameloop;
 
 /**
  * Controls the main loop. This class will try to update the logics in a

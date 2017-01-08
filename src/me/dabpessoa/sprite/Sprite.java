@@ -1,5 +1,7 @@
 package me.dabpessoa.sprite;
 
+import me.dabpessoa.game.ResourceManager;
+
 import java.awt.Graphics2D;
 import java.awt.Window;
 
@@ -18,6 +20,7 @@ public abstract class Sprite {
 	
 	public abstract void update(long elapsedTime);
 	public abstract void draw(Graphics2D g2d);
+	public abstract void init(ResourceManager resource);
 	
 	private Window canvas;
 	

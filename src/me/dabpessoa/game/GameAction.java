@@ -1,4 +1,4 @@
-package me.dabpessoa.core;
+package me.dabpessoa.game;
 
 /**
  * The GameAction class represents a user-defined action, like jumping or

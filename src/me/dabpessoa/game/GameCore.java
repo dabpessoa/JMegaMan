@@ -1,12 +1,13 @@
-package me.dabpessoa.core;
+package me.dabpessoa.game;
 
 import java.awt.Graphics;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 
-import me.dabpessoa.game.LoopSteps;
-import me.dabpessoa.game.MainLoop;
+import me.dabpessoa.core.World;
+import me.dabpessoa.gameloop.LoopSteps;
+import me.dabpessoa.gameloop.MainLoop;
 import me.dabpessoa.map.TileMap;
 import me.dabpessoa.map.TileMapRenderer;
 import me.dabpessoa.sprite.MegaMan;
@@ -17,24 +18,21 @@ public class GameCore implements LoopSteps {
 
 	private MainLoop loop;
 	private long previousTime;
-//	private List<Sprite> sprites;
-	private TileMapRenderer mapRenderer;
-	private Window canvas;
-	private TileMap map;
+//	private TileMapRenderer mapRenderer;
+//	private Window canvas;
+//	private TileMap map;
 	private KeyManager keyManager;
 	private GameAction moveLeft;
 	private GameAction moveRight;
 	private GameAction jump;
 	private GameAction down;
 	private GameAction exit;
-	
-	public GameCore(TileMapRenderer renderer, TileMap map, Window canvas) {
+	private World world;
+
+	public GameCore(World world) {
+		this.world = world;
 		 this.loop = new MainLoop(this, 60);
-		 this.canvas = canvas;
-		 this.mapRenderer = renderer;
 		 this.previousTime = System.currentTimeMillis();
-		 this.canvas.setIgnoreRepaint(true);
-		 this.map = map;
 	}
 	
 	public void run() {
@@ -53,8 +51,8 @@ public class GameCore implements LoopSteps {
 		/*
 		 * Aqui � onde a tela ser� pintada.
 		 */
-		if (!canvas.getBufferStrategy().contentsLost())
-			canvas.getBufferStrategy().show();
+		if (!world.getCanvas().getBufferStrategy().contentsLost())
+			world.getCanvas().getBufferStrategy().show();
 	}
 
 	@Override
@@ -67,12 +65,12 @@ public class GameCore implements LoopSteps {
 		//Calcula o tempo entre dois updates.
 		long elapsedTime = System.currentTimeMillis() - previousTime;
 		
-		checkInput(map.getPlayer());
+		checkInput(world.getPlayer());
 		
 		//Chama o update dos sprites passando a vari�vel
 		//"elapsedTime" como par�metro.
-		map.getPlayer().update(elapsedTime);
-		Iterator<Sprite> iterator = map.getSprites();
+		world.getPlayer().update(elapsedTime);
+		Iterator<Sprite> iterator = world.getSprites();
         while ( iterator.hasNext() ) {
         	Sprite sprite = ( Sprite ) iterator.next();
         	sprite.update(elapsedTime);
@@ -106,15 +104,15 @@ public class GameCore implements LoopSteps {
 		/*
 		 * Aqui todos os sprites ser�o pintados na tela.
 		 */
-		Graphics g = canvas.getBufferStrategy().getDrawGraphics();
+		Graphics g = world.getCanvas().getBufferStrategy().getDrawGraphics();
 		
 		//Criamos um contexto gr�fico que n�o leva em conta as bordas
-		Graphics g2 = g.create(canvas.getInsets().right, 
-				   canvas.getInsets().top, 
-				   canvas.getWidth() - canvas.getInsets().left, 
-				   canvas.getHeight() - canvas.getInsets().bottom);
-		
-		mapRenderer.draw(g2, map, canvas.getWidth(), canvas.getHeight());
+		Graphics g2 = g.create(world.getCanvas().getInsets().right,
+				world.getCanvas().getInsets().top,
+				world.getCanvas().getWidth() - world.getCanvas().getInsets().left,
+				world.getCanvas().getHeight() - world.getCanvas().getInsets().bottom);
+
+		world.getTileMapRenderer().draw(g2, world.getTileMap(), world.getCanvas().getWidth(), world.getCanvas().getHeight());
 		
 		//Liberamos os contextos criados.
 		g.dispose(); 
@@ -125,7 +123,7 @@ public class GameCore implements LoopSteps {
 	@Override
 	public void setup() {
 		//Criamos a estrat�gia de double buffering
-		canvas.createBufferStrategy(2);
+		world.getCanvas().createBufferStrategy(2);
 		
 		
 		
@@ -143,7 +141,7 @@ public class GameCore implements LoopSteps {
 		keyManager.map(KeyEvent.VK_ESCAPE, exit);
 		keyManager.map(KeyEvent.VK_SPACE, jump);
 		
-		keyManager.setComponent(canvas);
+		keyManager.setComponent(world.getCanvas());
 		
 		
 		
@@ -152,7 +150,7 @@ public class GameCore implements LoopSteps {
 
 	@Override
 	public void tearDown() {
-		canvas.dispose();
+		world.getCanvas().dispose();
 	}
 
 }
