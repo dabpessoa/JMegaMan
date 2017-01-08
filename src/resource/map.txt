@@ -1,0 +1,20 @@
+# Arquivo de mapa
+# Linhas que iniciam com '#' representam comentários
+#
+#   Tiles:
+#   (Espaço) Tile Vazio
+#   A..Z     Tiles A through Z
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+A                                     A
+A       AAAA                          A
+A                                     A
+A                                     A
+A   AA                                A
+A                                     A
+A                                     A
+A     A                               A
+A                                     A
+A   AAAAAA                            A
+AA        A                           A
+A                                     A
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
