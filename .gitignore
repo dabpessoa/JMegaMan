@@ -1,0 +1,10 @@
+/build
+.classpath
+.project
+.settings
+/.settings
+/bin
+README.md
+out
+.idea
+*.iml
