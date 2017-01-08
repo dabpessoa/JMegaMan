@@ -14,16 +14,19 @@ public class MegaMan extends Sprite {
 	
 	private Animation runLeftAnimation;
     private Animation runRightAnimation;
-    private Animation idleAnimation;
+    private Animation idleLeftAnimation;
+	private Animation idleRightAnimation;
     private Animation jumpRightAnimation;
     
     private boolean onGround = true;
+	private boolean turnedRight = true;
+
 	private World world;
 	
 	public MegaMan(World world) {
 		super(world.getCanvas());
 		this.world = world;
-		this.setAnimation(getIdleAnimation());
+		this.setAnimation(getIdleRightAnimation());
 		init(world.getResourceManager());
 	}
 
@@ -61,13 +64,21 @@ public class MegaMan extends Sprite {
 		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run9.png"), 80);
 		runRightAnimation.addFrame(resourceManager.loadImage("megaman/runright/run10.png"), 80);
 
-		Animation idleAnimation = new Animation();
-		idleAnimation.addFrame(resourceManager.loadImage("megaman/idleright/idle1.png"), 8000);
-		idleAnimation.addFrame(resourceManager.loadImage("megaman/idleright/idle2.png"), 350);
-		idleAnimation.addFrame(resourceManager.loadImage("megaman/idleright/idle3.png"), 200);
-		idleAnimation.addFrame(resourceManager.loadImage("megaman/idleright/idle4.png"), 230);
-		idleAnimation.addFrame(resourceManager.loadImage("megaman/idleright/idle5.png"), 350);
-		idleAnimation.addFrame(resourceManager.loadImage("megaman/idleright/idle6.png"), 1650);
+		Animation idleRightAnimation = new Animation();
+		idleRightAnimation.addFrame(resourceManager.loadImage("megaman/idle/right/idle1.png"), 2000);
+		idleRightAnimation.addFrame(resourceManager.loadImage("megaman/idle/right/idle2.png"), 350);
+		idleRightAnimation.addFrame(resourceManager.loadImage("megaman/idle/right/idle3.png"), 200);
+		idleRightAnimation.addFrame(resourceManager.loadImage("megaman/idle/right/idle4.png"), 230);
+		idleRightAnimation.addFrame(resourceManager.loadImage("megaman/idle/right/idle5.png"), 350);
+		idleRightAnimation.addFrame(resourceManager.loadImage("megaman/idle/right/idle6.png"), 1650);
+
+		Animation idleLeftAnimation = new Animation();
+		idleLeftAnimation.addFrame(resourceManager.loadImage("megaman/idle/left/idle1.png"), 2000);
+		idleLeftAnimation.addFrame(resourceManager.loadImage("megaman/idle/left/idle2.png"), 350);
+		idleLeftAnimation.addFrame(resourceManager.loadImage("megaman/idle/left/idle3.png"), 200);
+		idleLeftAnimation.addFrame(resourceManager.loadImage("megaman/idle/left/idle4.png"), 230);
+		idleLeftAnimation.addFrame(resourceManager.loadImage("megaman/idle/left/idle5.png"), 350);
+		idleLeftAnimation.addFrame(resourceManager.loadImage("megaman/idle/left/idle6.png"), 1650);
 
 		Animation jumpRightAnimation = new Animation();
 		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump1.png"), 80);
@@ -81,7 +92,8 @@ public class MegaMan extends Sprite {
 		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump9.png"), 80);
 		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jumpright/jump10.png"), 80);
 
-		this.setIdleAnimation(idleAnimation);
+		this.setIdleLeftAnimation(idleLeftAnimation);
+		this.setIdleRightAnimation(idleRightAnimation);
 		this.setRunLeftAnimation(runLeftAnimation);
 		this.setRunRightAnimation(runRightAnimation);
 		this.setJumpRightAnimation(jumpRightAnimation);
@@ -102,20 +114,24 @@ public class MegaMan extends Sprite {
 		this.setVelocityY(this.getVelocityY() + (GRAVITY * elapsedTime));
 		
 		// Seleciona a anima��o correta
-//		 if (isJump()) {
+//		if (isJumping()) {
 //			this.setAnimation(getJumpRightAnimation());
+//		} else
 		if ( getVelocityX() == 0 ) {
-			this.setAnimation(getIdleAnimation());
+			if (isTurnedRight()) this.setAnimation(getIdleRightAnimation());
+			else this.setAnimation(getIdleLeftAnimation());
 		} else if (getVelocityX() > 0) {
+			setTurnedRight(true);
 			this.setAnimation(getRunRightAnimation());
 		} else if (getVelocityX() < 0) {
+			setTurnedRight(false);
 			this.setAnimation(getRunLeftAnimation());
 		}
 		 
 		// altera x
         float dx = this.getVelocityX();
         float oldX = this.getX();
-        float newX = oldX + dx * elapsedTime;
+        float newX = oldX + (dx * elapsedTime);
         Point tile = world.getTileMap().getTileCollision( this, newX, this.getY() );
         
         if ( tile == null ) {
@@ -186,6 +202,10 @@ public class MegaMan extends Sprite {
             setVelocityY( JUMP_SPEED );
         }
     }
+
+	public boolean isJumping() {
+		return !onGround;
+	}
 	
 	public Animation getRunLeftAnimation() {
 		return runLeftAnimation;
@@ -202,21 +222,37 @@ public class MegaMan extends Sprite {
 	public void setRunRightAnimation(Animation runRightAnimation) {
 		this.runRightAnimation = runRightAnimation;
 	}
-	
-	public Animation getIdleAnimation() {
-		return idleAnimation;
+
+	public Animation getIdleLeftAnimation() {
+		return idleLeftAnimation;
 	}
-	
-	public void setIdleAnimation(Animation idleAnimation) {
-		this.idleAnimation = idleAnimation;
+
+	public void setIdleLeftAnimation(Animation idleLeftAnimation) {
+		this.idleLeftAnimation = idleLeftAnimation;
 	}
-	
+
+	public Animation getIdleRightAnimation() {
+		return idleRightAnimation;
+	}
+
+	public void setIdleRightAnimation(Animation idleRightAnimation) {
+		this.idleRightAnimation = idleRightAnimation;
+	}
+
 	public Animation getJumpRightAnimation() {
 		return jumpRightAnimation;
 	}
 	
 	public void setJumpRightAnimation(Animation jumpRightAnimation) {
 		this.jumpRightAnimation = jumpRightAnimation;
+	}
+
+	public boolean isTurnedRight() {
+		return turnedRight;
+	}
+
+	public void setTurnedRight(boolean turnedRight) {
+		this.turnedRight = turnedRight;
 	}
 
 }
