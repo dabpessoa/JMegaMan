@@ -1,26 +1,18 @@
 package me.dabpessoa.game;
 
 import java.awt.Graphics;
-import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 
-import me.dabpessoa.core.World;
-import me.dabpessoa.gameloop.LoopSteps;
-import me.dabpessoa.gameloop.MainLoop;
-import me.dabpessoa.map.TileMap;
-import me.dabpessoa.map.TileMapRenderer;
+import me.dabpessoa.manager.KeyManager;
 import me.dabpessoa.sprite.MegaMan;
 import me.dabpessoa.sprite.Sprite;
 
 
 public class GameCore implements LoopSteps {
 
-	private MainLoop loop;
+	private GameLoop gameLoop;
 	private long previousTime;
-//	private TileMapRenderer mapRenderer;
-//	private Window canvas;
-//	private TileMap map;
 	private KeyManager keyManager;
 	private GameAction moveLeft;
 	private GameAction moveRight;
@@ -31,19 +23,19 @@ public class GameCore implements LoopSteps {
 
 	public GameCore(World world) {
 		this.world = world;
-		 this.loop = new MainLoop(this, 60);
+		 this.gameLoop = new GameLoop(this, 60);
 		 this.previousTime = System.currentTimeMillis();
 	}
 	
 	public void run() {
 		/*
-		 * Prepara o ambiente antes da inicializa��o do loop;
+		 * Prepara o ambiente antes da inicializa��o do gameLoop;
 		 */
 		this.startLoop();
 	}
 	
 	private void startLoop() {
-		new Thread(loop, "Main Loop").start();
+		new Thread(gameLoop, "Main Loop").start();
 	}
 	
 	@Override
@@ -122,11 +114,7 @@ public class GameCore implements LoopSteps {
 
 	@Override
 	public void setup() {
-		//Criamos a estrat�gia de double buffering
-		world.getCanvas().createBufferStrategy(2);
-		
-		
-		
+
 		moveLeft = new GameAction("moveLeft");
 		moveRight = new GameAction("moveRight");
 		jump = new GameAction("jump");
@@ -142,10 +130,7 @@ public class GameCore implements LoopSteps {
 		keyManager.map(KeyEvent.VK_SPACE, jump);
 		
 		keyManager.setComponent(world.getCanvas());
-		
-		
-		
-		
+
 	}
 
 	@Override

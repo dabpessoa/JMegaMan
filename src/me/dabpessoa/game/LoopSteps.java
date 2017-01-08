@@ -1,4 +1,4 @@
-package me.dabpessoa.gameloop;
+package me.dabpessoa.game;
 
 /**
  * This interface provide the methods executed in each step of a main loop. Each

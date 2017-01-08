@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.util.Iterator;
 
-import me.dabpessoa.core.World;
+import me.dabpessoa.game.World;
 import me.dabpessoa.sprite.Sprite;
 
 public class TileMapRenderer {

@@ -1,4 +1,4 @@
-package me.dabpessoa.gameloop;
+package me.dabpessoa.game;
 
 /**
  * Controls the main loop. This class will try to update the logics in a
@@ -19,10 +19,10 @@ package me.dabpessoa.gameloop;
  * automatically skiped. The maximum number of frames skiped in one single step
  * is given by the maxFrameSkips attribute.
  * <p>
- * To start the MainLoop call the run() method. For convenience, the
- * <code>MainLoop</code> class implements the runnable interface.
+ * To start the GameLoop call the run() method. For convenience, the
+ * <code>GameLoop</code> class implements the runnable interface.
  */
-public class MainLoop implements Runnable
+public class GameLoop implements Runnable
 {
     public static final int DEFAULT_UPS = 80;
     public static final int DEFAULT_NO_DELAYS_PER_YIELD = 16;
@@ -44,7 +44,7 @@ public class MainLoop implements Runnable
     int noDelays = 0;    
 
     /**
-     * Create a new MainLoop object.
+     * Create a new GameLoop object.
      * 
      * @param loopSteps The LoopSteps that will be controlled by this loop.
      * @param ups Number of desired updates per second.
@@ -54,10 +54,10 @@ public class MainLoop implements Runnable
      *        dellay between two frames, the delay will be enforced in this
      *        counter, so other threads can process their actions.
      */
-    public MainLoop(LoopSteps loopSteps,
-            int ups,
-            int maxFrameSkips,
-            int noDelaysPerYield)
+    public GameLoop(LoopSteps loopSteps,
+                    int ups,
+                    int maxFrameSkips,
+                    int noDelaysPerYield)
     {
         super();
 
@@ -76,22 +76,22 @@ public class MainLoop implements Runnable
     }
 
     /**
-     * Create a new MainLoop object.
+     * Create a new GameLoop object.
      * 
      * @param loopSteps The LoopSteps that will be controlled by this loop.
      * @param ups Number of desired updates per second.
      */
-    public MainLoop(LoopSteps loopSteps, int ups)
+    public GameLoop(LoopSteps loopSteps, int ups)
     {
         this(loopSteps, ups, DEFAULT_MAX_FRAME_SKIPS, DEFAULT_NO_DELAYS_PER_YIELD);
     }
 
     /**
-     * Create a new MainLoop object and an update per second factor of 80.
+     * Create a new GameLoop object and an update per second factor of 80.
      * 
      * @param loopSteps The LoopSteps that will be controlled by this loop.
      */
-    public MainLoop(LoopSteps loopSteps)
+    public GameLoop(LoopSteps loopSteps)
     {
         this(loopSteps, DEFAULT_UPS);
     }

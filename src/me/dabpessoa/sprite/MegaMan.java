@@ -3,8 +3,8 @@ package me.dabpessoa.sprite;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
-import me.dabpessoa.core.World;
-import me.dabpessoa.game.ResourceManager;
+import me.dabpessoa.game.World;
+import me.dabpessoa.manager.ResourceManager;
 import me.dabpessoa.map.TileMapRenderer;
 
 public class MegaMan extends Sprite {

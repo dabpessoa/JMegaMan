@@ -1,4 +1,4 @@
-package me.dabpessoa.game;
+package me.dabpessoa.manager;
 
 import java.awt.Image;
 import java.io.BufferedReader;

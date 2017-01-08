@@ -1,7 +1,6 @@
-package me.dabpessoa.core;
+package me.dabpessoa.game;
 
-import me.dabpessoa.game.GameCore;
-import me.dabpessoa.game.ResourceManager;
+import me.dabpessoa.manager.ResourceManager;
 import me.dabpessoa.map.TileMap;
 import me.dabpessoa.map.TileMapRenderer;
 import me.dabpessoa.sprite.MegaMan;
@@ -20,7 +19,7 @@ public class World {
 
     private ResourceManager resourceManager;
     private LinkedList<Sprite> sprites;
-    private TileMap map;
+    private TileMap tileMap;
     private TileMapRenderer tileMapRenderer;
     private JFrame canvas;
     private Sprite player;
@@ -31,7 +30,7 @@ public class World {
         tileMapRenderer = new TileMapRenderer(this);
         canvas = createCanvas();
         try {
-            map = createMap();
+            tileMap = createMap();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,9 +55,9 @@ public class World {
     }
 
     public TileMap createMap() throws IOException {
-        map = new TileMap(50, 25);
-        map = resourceManager.loadMap("map.txt");
-        return map;
+        tileMap = new TileMap(50, 25);
+        tileMap = resourceManager.loadMap("map.txt");
+        return tileMap;
     }
 
     private JFrame createCanvas() {
@@ -77,6 +76,9 @@ public class World {
                         new Point( 0, 0 ),
                         "invisible" );
         canvas.setCursor(invisibleCursor);
+
+        //Criamos a estrat�gia de double buffering
+        canvas.createBufferStrategy(2);
 
         return canvas;
     }
@@ -98,7 +100,7 @@ public class World {
     }
 
     public TileMap getTileMap() {
-        return map;
+        return tileMap;
     }
 
     public TileMapRenderer getTileMapRenderer() {

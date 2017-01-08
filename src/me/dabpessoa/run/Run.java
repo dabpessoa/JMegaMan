@@ -1,6 +1,6 @@
 package me.dabpessoa.run;
 
-import me.dabpessoa.core.World;
+import me.dabpessoa.game.World;
 
 import java.awt.EventQueue;
 

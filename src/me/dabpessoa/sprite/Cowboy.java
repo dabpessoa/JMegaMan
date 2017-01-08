@@ -2,8 +2,8 @@ package me.dabpessoa.sprite;
 
 import java.awt.Graphics2D;
 
-import me.dabpessoa.core.World;
-import me.dabpessoa.game.ResourceManager;
+import me.dabpessoa.game.World;
+import me.dabpessoa.manager.ResourceManager;
 
 public class Cowboy extends Sprite {
 

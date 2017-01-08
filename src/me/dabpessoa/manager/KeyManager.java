@@ -1,4 +1,6 @@
-package me.dabpessoa.game;
+package me.dabpessoa.manager;
+
+import me.dabpessoa.game.GameAction;
 
 import java.awt.Component;
 import java.awt.event.KeyEvent;
