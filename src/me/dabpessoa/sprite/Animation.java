@@ -32,7 +32,7 @@ public class Animation {
     private Animation( List< SpriteFrame > frames, long totalDuration ) {
         this.frames = frames;
         this.totalDuration = totalDuration;
-        start();
+        init();
     }
     
     
@@ -61,7 +61,7 @@ public class Animation {
     /**
      * Inicia a anima��o desde o in�cio.
      */
-    public synchronized void start() {
+    public synchronized void init() {
         animationTime = 0;
         currentFrameIndex = 0;
     }

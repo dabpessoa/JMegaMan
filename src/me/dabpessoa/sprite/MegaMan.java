@@ -16,6 +16,7 @@ public class MegaMan extends Sprite {
     private Animation runRightAnimation;
     private Animation idleLeftAnimation;
 	private Animation idleRightAnimation;
+	private Animation jumpLeftAnimation;
     private Animation jumpRightAnimation;
     
     private boolean onGround;
@@ -80,8 +81,20 @@ public class MegaMan extends Sprite {
 		idleLeftAnimation.addFrame(resourceManager.loadImage("megaman/idle/left/idle5.png"), 350);
 		idleLeftAnimation.addFrame(resourceManager.loadImage("megaman/idle/left/idle6.png"), 1650);
 
+		Animation jumpLeftAnimation = new Animation();
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump1.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump2.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump3.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump4.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump5.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump6.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump7.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump8.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump9.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump10.png"), 80);
+
 		Animation jumpRightAnimation = new Animation();
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump1.png"), 200);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump1.png"), 80);
 		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump2.png"), 80);
 		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump3.png"), 80);
 		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump4.png"), 80);
@@ -96,6 +109,7 @@ public class MegaMan extends Sprite {
 		this.setIdleRightAnimation(idleRightAnimation);
 		this.setRunLeftAnimation(runLeftAnimation);
 		this.setRunRightAnimation(runRightAnimation);
+		this.setJumpLeftAnimation(jumpLeftAnimation);
 		this.setJumpRightAnimation(jumpRightAnimation);
 
 		this.setX(668);
@@ -106,16 +120,14 @@ public class MegaMan extends Sprite {
 	@Override
 	public void update(long elapsedTime) {
 		
-		if (this.getVelocityY() == 0) {
+		if (this.getVelocityY() == 0.0f) {
 			onGround = true;
+			getJumpLeftAnimation().init();
+			getJumpRightAnimation().init();
 		}
 		
 		//A gravidade afeta o sprite
 		this.setVelocityY(this.getVelocityY() + (GRAVITY * elapsedTime));
-
-		if (!isJumping()) {
-			getJumpRightAnimation().start();
-		}
 
 		// Seleciona a anima��o correta
 //		if (isJumping()) {
@@ -133,50 +145,51 @@ public class MegaMan extends Sprite {
 			this.setAnimation(getRunLeftAnimation());
 		}
 
-		// altera x
-        float dx = this.getVelocityX();
+		// calcula deslocamento x
+        float velocidadeX = this.getVelocityX();
         float oldX = this.getX();
-        float newX = oldX + (dx * elapsedTime);
-        Point tile = world.getTileMap().getTileCollision( this, newX, this.getY() );
+        float newX = oldX + (velocidadeX * elapsedTime);
+        Point tileX = world.getTileMap().getTileCollision( this, newX, this.getY() );
         
-        if ( tile == null ) {
+        if ( tileX == null ) { // Não há colisão horizontal.
         	this.setX( newX );
-        } else {
+		} else {
             
             // alinha com a borda do tile
-            if ( dx > 0 ) {
-            	this.setX(
-                        TileMapRenderer.tilesToPixels( tile.x ) -
-                        this.getWidth() );
-            } else if ( dx < 0 ) {
-            	this.setX(
-                        TileMapRenderer.tilesToPixels( tile.x + 1 ) );
+            if ( velocidadeX > 0 ) {
+            	this.setX( TileMapRenderer.tilesToPixels( tileX.x ) - this.getWidth() );
+            } else if ( velocidadeX < 0 ) {
+            	this.setX( TileMapRenderer.tilesToPixels( tileX.x + 1 ) );
             }
             this.collideHorizontal();
+
         }
         
-        // troca y
-        float dy = this.getVelocityY();
+        // calcula deslocamento y
+		System.out.println("velocityY: "+getVelocityY());
+		float velocidadeY = this.getVelocityY();
         float oldY = this.getY();
-        float newY = oldY + dy * elapsedTime;
-        tile = world.getTileMap().getTileCollision( this, this.getX(), newY );
-        
-        if ( tile == null ) {
-        	this.setY( newY );
-        } else {
-            // alinha com a borda do tile
-            if ( dy > 0 ) {
-            	this.setY(
-                        TileMapRenderer.tilesToPixels( tile.y ) -
-                        this.getHeight() );
-            } else if ( dy < 0 ) {
-            	this.setY(
-                        TileMapRenderer.tilesToPixels( tile.y + 1 ) );
+        float newY = oldY + (velocidadeY * elapsedTime);
+		System.out.println("newY: "+newY);
+		Point tileY = world.getTileMap().getTileCollision( this, this.getX(), newY );
+
+        if ( tileY == null ) { // Não há colisão vertical.
+			System.out.println("Sem Colisão");
+			this.setY( newY );
+		} else {
+			System.out.println("COLISÃO");
+			// alinha com a borda do tile
+            if ( velocidadeY > 0 ) {
+            	this.setY(TileMapRenderer.tilesToPixels( tileY.y ) - this.getHeight());
+            } else if ( velocidadeY < 0 ) {
+            	this.setY(TileMapRenderer.tilesToPixels( tileY.y + 1 ) );
             }
             this.collideVertical();
+
         }
-        
-        getAnimation().update( elapsedTime );
+
+		System.out.println("elapsedTime: "+elapsedTime);
+		getAnimation().update( elapsedTime );
         
 	}
 	
@@ -185,7 +198,7 @@ public class MegaMan extends Sprite {
      * horizontalmente.
      */
     public void collideHorizontal() {
-        setVelocityX(0);
+        setVelocityX(0.0f);
     }
     
     
@@ -194,7 +207,7 @@ public class MegaMan extends Sprite {
      * verticalmente.
      */
     public void collideVertical() {
-        setVelocityY(0);
+        setVelocityY(0.0f);
     }
 	
 	/**
@@ -247,9 +260,17 @@ public class MegaMan extends Sprite {
 	public Animation getJumpRightAnimation() {
 		return jumpRightAnimation;
 	}
-	
+
 	public void setJumpRightAnimation(Animation jumpRightAnimation) {
 		this.jumpRightAnimation = jumpRightAnimation;
+	}
+
+	public Animation getJumpLeftAnimation() {
+		return jumpLeftAnimation;
+	}
+
+	public void setJumpLeftAnimation(Animation jumpLeftAnimation) {
+		this.jumpLeftAnimation = jumpLeftAnimation;
 	}
 
 	public boolean isTurnedRight() {
