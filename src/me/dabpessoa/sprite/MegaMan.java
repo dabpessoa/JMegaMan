@@ -130,18 +130,16 @@ public class MegaMan extends Sprite {
 		this.setVelocityY(this.getVelocityY() + (GRAVITY * elapsedTime));
 
 		// Seleciona a anima��o correta
-//		if (isJumping()) {
-//			if (isTurnedRight()) this.setAnimation(getJumpRightAnimation());
-//			else this.setAnimation(getJumpRightAnimation());
-//		} else
+		if (isJumping()) {
+			if (isTurnedRight()) this.setAnimation(getJumpRightAnimation());
+			else this.setAnimation(getJumpLeftAnimation());
+		} else
 		if ( getVelocityX() == 0 ) {
 			if (isTurnedRight()) this.setAnimation(getIdleRightAnimation());
 			else this.setAnimation(getIdleLeftAnimation());
 		} else if (getVelocityX() > 0) {
-			setTurnedRight(true);
 			this.setAnimation(getRunRightAnimation());
 		} else if (getVelocityX() < 0) {
-			setTurnedRight(false);
 			this.setAnimation(getRunLeftAnimation());
 		}
 
