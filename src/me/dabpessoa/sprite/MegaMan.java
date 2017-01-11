@@ -1,11 +1,9 @@
 package me.dabpessoa.sprite;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 
 import me.dabpessoa.game.World;
 import me.dabpessoa.manager.ResourceManager;
-import me.dabpessoa.map.TileMapRenderer;
 
 public class MegaMan extends Sprite {
 
@@ -27,7 +25,6 @@ public class MegaMan extends Sprite {
 	public MegaMan(World world) {
 		super(world.getCanvas());
 		this.world = world;
-		this.setAnimation(getIdleRightAnimation());
 		turnedRight = true;
 		onGround = true;
 		init(world.getResourceManager());
@@ -115,26 +112,45 @@ public class MegaMan extends Sprite {
 		this.setX(668);
 		this.setY(300);
 
+		this.setAnimation(getIdleRightAnimation());
+
 	}
 
 	@Override
 	public void update(long elapsedTime) {
-		
-		if (this.getVelocityY() == 0.0f) {
-			onGround = true;
-			getJumpLeftAnimation().init();
-			getJumpRightAnimation().init();
-		}
-		
-		//A gravidade afeta o sprite
+
+		// A gravidade afeta o sprite (atuação da gravidade).
 		this.setVelocityY(this.getVelocityY() + (GRAVITY * elapsedTime));
+
+		// calcula deslocamento x e y de acordo com a variação de tempo
+		// x = V * t (espaço percorrido = velocidade * tempo)
+		float novaPosicaoX = getX() + (getVelocityX() * elapsedTime);
+		float novaPosicaoY = getY() + (getVelocityY() * elapsedTime);
+
+		boolean colisaoX = world.getTileMap().getSpriteTileCollision(this, novaPosicaoX, getY()) != null;
+		boolean colisaoY = world.getTileMap().getSpriteTileCollision(this, getX(), novaPosicaoY) != null;
+
+		System.out.println("colisaoX: "+colisaoX);
+
+		if (colisaoX) collideHorizontal();
+		else setX(novaPosicaoX); // Se não colidir atualiza a nova posição X
+
+		if (colisaoY) collideVertical();
+		else setY(novaPosicaoY); // Se não colidir atualiza a nova posição Y
+
+		if (getVelocityY() == 0.0f) {
+			onGround = true;
+			getJumpLeftAnimation().initConfig();
+			getJumpRightAnimation().initConfig();
+		}
+
+		Animation oldAnimation = getAnimation();
 
 		// Seleciona a anima��o correta
 		if (isJumping()) {
 			if (isTurnedRight()) this.setAnimation(getJumpRightAnimation());
 			else this.setAnimation(getJumpLeftAnimation());
-		} else
-		if ( getVelocityX() == 0 ) {
+		} else if ( getVelocityX() == 0 ) {
 			if (isTurnedRight()) this.setAnimation(getIdleRightAnimation());
 			else this.setAnimation(getIdleLeftAnimation());
 		} else if (getVelocityX() > 0) {
@@ -143,52 +159,23 @@ public class MegaMan extends Sprite {
 			this.setAnimation(getRunLeftAnimation());
 		}
 
-		// calcula deslocamento x
-        float velocidadeX = this.getVelocityX();
-        float oldX = this.getX();
-        float newX = oldX + (velocidadeX * elapsedTime);
-        Point tileX = world.getTileMap().getTileCollision( this, newX, this.getY() );
-        
-        if ( tileX == null ) { // Não há colisão horizontal.
-        	this.setX( newX );
-		} else {
-            
-            // alinha com a borda do tile
-            if ( velocidadeX > 0 ) {
-            	this.setX( TileMapRenderer.tilesToPixels( tileX.x ) - this.getWidth() );
-            } else if ( velocidadeX < 0 ) {
-            	this.setX( TileMapRenderer.tilesToPixels( tileX.x + 1 ) );
-            }
-            this.collideHorizontal();
-
-        }
-        
-        // calcula deslocamento y
-		System.out.println("velocityY: "+getVelocityY());
-		float velocidadeY = this.getVelocityY();
-        float oldY = this.getY();
-        float newY = oldY + (velocidadeY * elapsedTime);
-		System.out.println("newY: "+newY);
-		Point tileY = world.getTileMap().getTileCollision( this, this.getX(), newY );
-
-        if ( tileY == null ) { // Não há colisão vertical.
-			System.out.println("Sem Colisão");
-			this.setY( newY );
-		} else {
-			System.out.println("COLISÃO");
-			// alinha com a borda do tile
-            if ( velocidadeY > 0 ) {
-            	this.setY(TileMapRenderer.tilesToPixels( tileY.y ) - this.getHeight());
-            } else if ( velocidadeY < 0 ) {
-            	this.setY(TileMapRenderer.tilesToPixels( tileY.y + 1 ) );
-            }
-            this.collideVertical();
-
-        }
-
-		System.out.println("elapsedTime: "+elapsedTime);
+		// Atualiza imagem da animação
 		getAnimation().update( elapsedTime );
-        
+
+		// Verifica colisões com a nova animação
+		boolean colisaoXNovaAnimacao = world.getTileMap().getSpriteTileCollision(this, getX(), getY()) != null;
+		boolean colisaoYNovaAnimacao= world.getTileMap().getSpriteTileCollision(this, getX(), getY()) != null;
+
+		// Ajuste das posições de acordo com novas animações
+		if (colisaoXNovaAnimacao) {
+			float diff = getAnimation().getImage().getWidth(null) - oldAnimation.getImage().getWidth(null);
+			System.out.println("diff: "+diff);
+			setX(getX() - diff);
+		} if (colisaoYNovaAnimacao) {
+			float diff = getAnimation().getImage().getHeight(null) - oldAnimation.getImage().getHeight(null);
+			setY(getY() - diff);
+		}
+
 	}
 	
 	/**

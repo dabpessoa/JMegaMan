@@ -32,7 +32,7 @@ public class Animation {
     private Animation( List< SpriteFrame > frames, long totalDuration ) {
         this.frames = frames;
         this.totalDuration = totalDuration;
-        init();
+        initConfig();
     }
     
     
@@ -61,7 +61,7 @@ public class Animation {
     /**
      * Inicia a anima��o desde o in�cio.
      */
-    public synchronized void init() {
+    public synchronized void initConfig() {
         animationTime = 0;
         currentFrameIndex = 0;
     }
@@ -77,10 +77,8 @@ public class Animation {
             animationTime += elapsedTime;
             
             if ( animationTime >= totalDuration ) {
-                
-                animationTime = animationTime % totalDuration;
+                animationTime = 0;
                 currentFrameIndex = 0;
-                
             }
             
             while ( animationTime > getFrame( currentFrameIndex ).endTime ) {

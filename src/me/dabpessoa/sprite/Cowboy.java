@@ -109,7 +109,7 @@ public class Cowboy extends Sprite {
 		float novaPosicaoX = getX() + (getVelocityX() * elapsedTime);
 		float novaPosicaoY = getY() + (getVelocityY() * elapsedTime);
 		
-		boolean temTile = world.getTileMap().checkExistsTile(novaPosicaoX, novaPosicaoY, this);
+		boolean temTile = world.getTileMap().checkExistsTile(novaPosicaoX, novaPosicaoY);
 		
 		if ( getVelocityX() == 0 ) {
 			this.setAnimation(getIdleAnimation());

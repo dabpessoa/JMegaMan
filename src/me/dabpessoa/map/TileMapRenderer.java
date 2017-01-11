@@ -71,8 +71,7 @@ public class TileMapRenderer {
         int mapWidth = tilesToPixels( map.getWidth() );
         
         // obt�m a posi��o de scrolling do mapa, baseado na posi��o do jogador
-        int offsetX = screenWidth / 2 -
-                Math.round( world.getPlayer().getX() ) - TILE_SIZE;
+        int offsetX = (screenWidth / 2) - Math.round( world.getPlayer().getX() ) - TILE_SIZE;
         offsetX = Math.min( offsetX, 0 );
         offsetX = Math.max( offsetX, screenWidth - mapWidth );
 //        int offsetX = screenWidth - tilesToPixels(map.getWidth()); 

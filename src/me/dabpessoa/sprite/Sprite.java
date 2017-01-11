@@ -1,5 +1,6 @@
 package me.dabpessoa.sprite;
 
+import me.dabpessoa.game.GameAction;
 import me.dabpessoa.manager.ResourceManager;
 
 import java.awt.Graphics2D;

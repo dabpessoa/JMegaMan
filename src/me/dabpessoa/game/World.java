@@ -45,7 +45,7 @@ public class World {
         Cowboy cowboy = new Cowboy(this);
 
         setPlayer(megaMan);
-        addSprite(cowboy);
+//        addSprite(cowboy);
 //        setPlayer(cowboy);
 //        addSprite(megaMan);
 

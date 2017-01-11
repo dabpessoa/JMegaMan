@@ -57,8 +57,8 @@ public class TileMap {
      * Obt�m o tile que a Sprite colide. Somente X ou Y da Sprite deve ser
      * mudado n�o ambos. Retorna null se nenhuma colis�o for detectada.
      */
-    public Point getTileCollision(Sprite sprite,
-                                  float newX, float newY) {
+    public Point getSpriteTileCollision(Sprite sprite,
+                                        float newX, float newY) {
 
         Point pointCache = new Point();
 
@@ -71,16 +71,16 @@ public class TileMap {
         int fromTileX = TileMapRenderer.pixelsToTiles( fromX );
         int fromTileY = TileMapRenderer.pixelsToTiles( fromY );
         int toTileX = TileMapRenderer.pixelsToTiles(
-                toX + sprite.getWidth() - 1 );
+                toX + sprite.getWidth());
         int toTileY = TileMapRenderer.pixelsToTiles(
-                toY + sprite.getHeight() - 1 );
+                toY + sprite.getHeight());
 
         // checa cada tile para verificar a colis�o
         for ( int x = fromTileX; x <= toTileX; x++ ) {
 
             for ( int y = fromTileY; y <= toTileY; y++ ) {
 
-                if ( x < 0 || x >= getWidth() ||
+                if ( x < 0 || x >= getWidth() || y < 0 || y >= getHeight() ||
                         getTile( x, y ) != null ) {
                     // colis�o achada, retorna o tile
                     pointCache.setLocation( x, y );
@@ -96,7 +96,7 @@ public class TileMap {
 
     }
 
-    public boolean checkExistsTile(float x, float y, Sprite sprite) {
+    public boolean checkExistsTile(float x, float y) {
 
         Tile t = getTile( TileMapRenderer.pixelsToTiles(x), TileMapRenderer.pixelsToTiles(y) );
 
