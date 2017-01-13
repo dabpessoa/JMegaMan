@@ -20,75 +20,73 @@ public class Cowboy extends Sprite {
     private Animation jumpAnimation;
     private int state;
     private float maxSpeed;
-
-	private World world;
     
     public Cowboy(World world) {
-		super(world.getCanvas());
-		this.world = world;
-		init(world.getResourceManager());
+		super(world);
 	}
     
 	@Override
 	public void draw(Graphics2D g2d) {
-		g2d.drawImage(getAnimation().getImage(), Math.round(getX()), Math.round(getY()), getCanvas());
+		g2d.drawImage(getAnimation().getImage(), Math.round(getX()), Math.round(getY()), getWorld().getCanvas());
 	}
 
 	@Override
-	public void init(ResourceManager resource) {
+	public void init() {
+
+		ResourceManager resourceManager = getWorld().getResourceManager();
 
 		Animation walkLeftAnimation = new Animation();
-		walkLeftAnimation.addFrame(resource.loadImage("walk/walkLeft1.png"), 80);
-		walkLeftAnimation.addFrame(resource.loadImage("walk/walkLeft2.png"), 80);
-		walkLeftAnimation.addFrame(resource.loadImage("walk/walkLeft3.png"), 80);
-		walkLeftAnimation.addFrame(resource.loadImage("walk/walkLeft4.png"), 80);
-		walkLeftAnimation.addFrame(resource.loadImage("walk/walkLeft5.png"), 80);
-		walkLeftAnimation.addFrame(resource.loadImage("walk/walkLeft6.png"), 80);
-		walkLeftAnimation.addFrame(resource.loadImage("walk/walkLeft7.png"), 80);
-		walkLeftAnimation.addFrame(resource.loadImage("walk/walkLeft8.png"), 80);
-		walkLeftAnimation.addFrame(resource.loadImage("walk/walkLeft9.png"), 80);
-		walkLeftAnimation.addFrame(resource.loadImage("walk/walkLeft10.png"), 80);
+		walkLeftAnimation.addFrame(resourceManager.loadImage("walk/walkLeft1.png"), 80);
+		walkLeftAnimation.addFrame(resourceManager.loadImage("walk/walkLeft2.png"), 80);
+		walkLeftAnimation.addFrame(resourceManager.loadImage("walk/walkLeft3.png"), 80);
+		walkLeftAnimation.addFrame(resourceManager.loadImage("walk/walkLeft4.png"), 80);
+		walkLeftAnimation.addFrame(resourceManager.loadImage("walk/walkLeft5.png"), 80);
+		walkLeftAnimation.addFrame(resourceManager.loadImage("walk/walkLeft6.png"), 80);
+		walkLeftAnimation.addFrame(resourceManager.loadImage("walk/walkLeft7.png"), 80);
+		walkLeftAnimation.addFrame(resourceManager.loadImage("walk/walkLeft8.png"), 80);
+		walkLeftAnimation.addFrame(resourceManager.loadImage("walk/walkLeft9.png"), 80);
+		walkLeftAnimation.addFrame(resourceManager.loadImage("walk/walkLeft10.png"), 80);
 
 		Animation walkRightAnimation = new Animation();
-		walkRightAnimation.addFrame(resource.loadImage("walk/walkRight1.png"), 80);
-		walkRightAnimation.addFrame(resource.loadImage("walk/walkRight2.png"), 80);
-		walkRightAnimation.addFrame(resource.loadImage("walk/walkRight3.png"), 80);
-		walkRightAnimation.addFrame(resource.loadImage("walk/walkRight4.png"), 80);
-		walkRightAnimation.addFrame(resource.loadImage("walk/walkRight5.png"), 80);
-		walkRightAnimation.addFrame(resource.loadImage("walk/walkRight6.png"), 80);
-		walkRightAnimation.addFrame(resource.loadImage("walk/walkRight7.png"), 80);
-		walkRightAnimation.addFrame(resource.loadImage("walk/walkRight8.png"), 80);
-		walkRightAnimation.addFrame(resource.loadImage("walk/walkRight9.png"), 80);
-		walkRightAnimation.addFrame(resource.loadImage("walk/walkRight10.png"), 80);
+		walkRightAnimation.addFrame(resourceManager.loadImage("walk/walkRight1.png"), 80);
+		walkRightAnimation.addFrame(resourceManager.loadImage("walk/walkRight2.png"), 80);
+		walkRightAnimation.addFrame(resourceManager.loadImage("walk/walkRight3.png"), 80);
+		walkRightAnimation.addFrame(resourceManager.loadImage("walk/walkRight4.png"), 80);
+		walkRightAnimation.addFrame(resourceManager.loadImage("walk/walkRight5.png"), 80);
+		walkRightAnimation.addFrame(resourceManager.loadImage("walk/walkRight6.png"), 80);
+		walkRightAnimation.addFrame(resourceManager.loadImage("walk/walkRight7.png"), 80);
+		walkRightAnimation.addFrame(resourceManager.loadImage("walk/walkRight8.png"), 80);
+		walkRightAnimation.addFrame(resourceManager.loadImage("walk/walkRight9.png"), 80);
+		walkRightAnimation.addFrame(resourceManager.loadImage("walk/walkRight10.png"), 80);
 
 		Animation idleAnimation = new Animation();
-		idleAnimation.addFrame(resource.loadImage("idle.png"), 80);
+		idleAnimation.addFrame(resourceManager.loadImage("idle.png"), 80);
 
 		Animation jumpAnimation = new Animation();
-		jumpAnimation.addFrame(resource.loadImage("jump/jump1.png"), 80);
-		jumpAnimation.addFrame(resource.loadImage("jump/jump2.png"), 80);
-		jumpAnimation.addFrame(resource.loadImage("jump/jump3.png"), 80);
-		jumpAnimation.addFrame(resource.loadImage("jump/jump4.png"), 80);
-		jumpAnimation.addFrame(resource.loadImage("jump/jump5.png"), 80);
-		jumpAnimation.addFrame(resource.loadImage("jump/jump6.png"), 80);
-		jumpAnimation.addFrame(resource.loadImage("jump/jump7.png"), 80);
-		jumpAnimation.addFrame(resource.loadImage("jump/jump8.png"), 80);
-		jumpAnimation.addFrame(resource.loadImage("jump/jump9.png"), 80);
-		jumpAnimation.addFrame(resource.loadImage("jump/jump10.png"), 80);
-		jumpAnimation.addFrame(resource.loadImage("jump/jump11.png"), 80);
+		jumpAnimation.addFrame(resourceManager.loadImage("jump/jump1.png"), 80);
+		jumpAnimation.addFrame(resourceManager.loadImage("jump/jump2.png"), 80);
+		jumpAnimation.addFrame(resourceManager.loadImage("jump/jump3.png"), 80);
+		jumpAnimation.addFrame(resourceManager.loadImage("jump/jump4.png"), 80);
+		jumpAnimation.addFrame(resourceManager.loadImage("jump/jump5.png"), 80);
+		jumpAnimation.addFrame(resourceManager.loadImage("jump/jump6.png"), 80);
+		jumpAnimation.addFrame(resourceManager.loadImage("jump/jump7.png"), 80);
+		jumpAnimation.addFrame(resourceManager.loadImage("jump/jump8.png"), 80);
+		jumpAnimation.addFrame(resourceManager.loadImage("jump/jump9.png"), 80);
+		jumpAnimation.addFrame(resourceManager.loadImage("jump/jump10.png"), 80);
+		jumpAnimation.addFrame(resourceManager.loadImage("jump/jump11.png"), 80);
 
 		Animation celebrateAnimation = new Animation();
-		celebrateAnimation.addFrame(resource.loadImage("celebrate/celebrate1.png"), 80);
-		celebrateAnimation.addFrame(resource.loadImage("celebrate/celebrate2.png"), 80);
-		celebrateAnimation.addFrame(resource.loadImage("celebrate/celebrate3.png"), 80);
-		celebrateAnimation.addFrame(resource.loadImage("celebrate/celebrate4.png"), 80);
-		celebrateAnimation.addFrame(resource.loadImage("celebrate/celebrate5.png"), 80);
-		celebrateAnimation.addFrame(resource.loadImage("celebrate/celebrate6.png"), 80);
-		celebrateAnimation.addFrame(resource.loadImage("celebrate/celebrate7.png"), 80);
-		celebrateAnimation.addFrame(resource.loadImage("celebrate/celebrate8.png"), 80);
-		celebrateAnimation.addFrame(resource.loadImage("celebrate/celebrate9.png"), 80);
-		celebrateAnimation.addFrame(resource.loadImage("celebrate/celebrate10.png"), 80);
-		celebrateAnimation.addFrame(resource.loadImage("celebrate/celebrate11.png"), 80);
+		celebrateAnimation.addFrame(resourceManager.loadImage("celebrate/celebrate1.png"), 80);
+		celebrateAnimation.addFrame(resourceManager.loadImage("celebrate/celebrate2.png"), 80);
+		celebrateAnimation.addFrame(resourceManager.loadImage("celebrate/celebrate3.png"), 80);
+		celebrateAnimation.addFrame(resourceManager.loadImage("celebrate/celebrate4.png"), 80);
+		celebrateAnimation.addFrame(resourceManager.loadImage("celebrate/celebrate5.png"), 80);
+		celebrateAnimation.addFrame(resourceManager.loadImage("celebrate/celebrate6.png"), 80);
+		celebrateAnimation.addFrame(resourceManager.loadImage("celebrate/celebrate7.png"), 80);
+		celebrateAnimation.addFrame(resourceManager.loadImage("celebrate/celebrate8.png"), 80);
+		celebrateAnimation.addFrame(resourceManager.loadImage("celebrate/celebrate9.png"), 80);
+		celebrateAnimation.addFrame(resourceManager.loadImage("celebrate/celebrate10.png"), 80);
+		celebrateAnimation.addFrame(resourceManager.loadImage("celebrate/celebrate11.png"), 80);
 
 		this.setWalkLeftAnimation(walkLeftAnimation);
 		this.setWalkRightAnimation(walkRightAnimation);
@@ -109,7 +107,7 @@ public class Cowboy extends Sprite {
 		float novaPosicaoX = getX() + (getVelocityX() * elapsedTime);
 		float novaPosicaoY = getY() + (getVelocityY() * elapsedTime);
 		
-		boolean temTile = world.getTileMap().checkExistsTile(novaPosicaoX, novaPosicaoY);
+		boolean temTile = getWorld().getTileMap().checkExistsTile(novaPosicaoX, novaPosicaoY);
 		
 		if ( getVelocityX() == 0 ) {
 			this.setAnimation(getIdleAnimation());

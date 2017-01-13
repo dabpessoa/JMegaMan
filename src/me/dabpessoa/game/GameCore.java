@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 import me.dabpessoa.manager.KeyManager;
 import me.dabpessoa.sprite.MegaMan;
+import me.dabpessoa.sprite.Quadrado;
 import me.dabpessoa.sprite.Sprite;
 
 
@@ -17,6 +18,7 @@ public class GameCore implements LoopSteps {
 	private GameAction moveLeft;
 	private GameAction moveRight;
 	private GameAction jump;
+	private GameAction up;
 	private GameAction down;
 	private GameAction exit;
 	private World world;
@@ -41,7 +43,7 @@ public class GameCore implements LoopSteps {
 	@Override
 	public void paintScreen() {
 		/*
-		 * Aqui � onde a tela ser� pintada.
+		 * Aqui é onde a tela será pintada.
 		 */
 		if (!world.getCanvas().getBufferStrategy().contentsLost())
 			world.getCanvas().getBufferStrategy().show();
@@ -50,7 +52,7 @@ public class GameCore implements LoopSteps {
 	@Override
 	public void processLogics() {
 		/*
-		 * Aqui ser� efetuado um update nos estados
+		 * Aqui será efetuado um update nos estados
 		 * de todos o sprites.
 		 */
 		
@@ -59,7 +61,7 @@ public class GameCore implements LoopSteps {
 		
 		checkInput(world.getPlayer());
 		
-		//Chama o update dos sprites passando a vari�vel
+		//Chama o update dos sprites passando a variável
 		//"elapsedTime" como par�metro.
 		world.getPlayer().update(elapsedTime);
 		Iterator<Sprite> iterator = world.getSprites();
@@ -68,7 +70,7 @@ public class GameCore implements LoopSteps {
         	sprite.update(elapsedTime);
 		}
 		
-		//Grava o tempo na sa�da do m�todo.
+		//Grava o tempo na saída do método.
 		previousTime = System.currentTimeMillis();
 		
 	}
@@ -76,19 +78,29 @@ public class GameCore implements LoopSteps {
 	public void checkInput(Sprite sprite) {
 
 		if (jump.isPressed()) {
-			((MegaMan)sprite).jump();
+			if (sprite instanceof  MegaMan) ((MegaMan)sprite).jump();
 		}
 
 		if (moveRight.isPressed()) {
-			((MegaMan)sprite).setTurnedRight(true);
+			if (sprite instanceof  MegaMan) ((MegaMan)sprite).setTurnedRight(true);
 			sprite.setVelocityX(0.13f);
 		} else if (moveLeft.isPressed()) {
-			((MegaMan)sprite).setTurnedRight(false);
+			if (sprite instanceof  MegaMan)  ((MegaMan)sprite).setTurnedRight(false);
 			sprite.setVelocityX(-0.13f);
 		} else {
 			sprite.setVelocityX(0);
 		}
-		
+
+		if (sprite instanceof Quadrado) {
+			if (up.isPressed()) {
+				sprite.setVelocityY(-0.13f);
+			} else if (down.isPressed()) {
+				sprite.setVelocityY(0.13f);
+			} else {
+				sprite.setVelocityY(0);
+			}
+		}
+
 	}
 
 	@Override
@@ -120,6 +132,7 @@ public class GameCore implements LoopSteps {
 		moveRight = new GameAction("moveRight");
 		jump = new GameAction("jump");
 		down = new GameAction("down");
+		up = new GameAction("up");
 		exit = new GameAction("exit");
 
 		keyManager = new KeyManager();
@@ -127,6 +140,7 @@ public class GameCore implements LoopSteps {
 		keyManager.map(KeyEvent.VK_LEFT, moveLeft);
 		keyManager.map(KeyEvent.VK_RIGHT, moveRight);
 		keyManager.map(KeyEvent.VK_DOWN, down);
+		keyManager.map(KeyEvent.VK_UP, up);
 		keyManager.map(KeyEvent.VK_ESCAPE, exit);
 		keyManager.map(KeyEvent.VK_SPACE, jump);
 		

@@ -1,6 +1,7 @@
 package me.dabpessoa.sprite;
 
 import me.dabpessoa.game.GameAction;
+import me.dabpessoa.game.World;
 import me.dabpessoa.manager.ResourceManager;
 
 import java.awt.Graphics2D;
@@ -18,23 +19,20 @@ public abstract class Sprite {
     // velocidade (pixels por milisegundo)
     private float velocityX;
     private float velocityY;
-	
+
+	private World world;
+
 	public abstract void update(long elapsedTime);
 	public abstract void draw(Graphics2D g2d);
-	public abstract void init(ResourceManager resource);
-	
-	private Window canvas;
-	
-	public Sprite(Window canvas) {
-		this.canvas = canvas;
+	public abstract void init();
+
+	public Sprite(World world) {
+		this.world = world;
 		this.x = 0;
 		this.y = 0;
 		this.velocityX = 0;
 		this.velocityY = 0;
-	}
-	
-	public Window getCanvas() {
-		return canvas;
+		init();
 	}
 	
 	public float getX() {
@@ -91,5 +89,12 @@ public abstract class Sprite {
     public int getHeight() {
         return animation.getImage().getHeight( null );
     }
-	
+
+	public World getWorld() {
+		return world;
+	}
+
+	public void setWorld(World world) {
+		this.world = world;
+	}
 }

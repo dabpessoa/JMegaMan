@@ -20,23 +20,21 @@ public class MegaMan extends Sprite {
     private boolean onGround;
 	private boolean turnedRight;
 
-	private World world;
-	
 	public MegaMan(World world) {
-		super(world.getCanvas());
-		this.world = world;
+		super(world);
 		turnedRight = true;
 		onGround = true;
-		init(world.getResourceManager());
 	}
 
 	@Override
 	public void draw(Graphics2D g2d) {
-		g2d.drawImage(getAnimation().getImage(), Math.round(getX()), Math.round(getY()), getCanvas());
+		g2d.drawImage(getAnimation().getImage(), Math.round(getX()), Math.round(getY()), getWorld().getCanvas());
 	}
 
 	@Override
-	public void init(ResourceManager resourceManager) {
+	public void init() {
+
+		ResourceManager resourceManager = getWorld().getResourceManager();
 
 		Animation runLeftAnimation = new Animation();
 		runLeftAnimation.addFrame(resourceManager.loadImage("megaman/run/left/run1.png"), 80);
@@ -119,32 +117,21 @@ public class MegaMan extends Sprite {
 	@Override
 	public void update(long elapsedTime) {
 
-		// A gravidade afeta o sprite (atuação da gravidade).
-		this.setVelocityY(this.getVelocityY() + (GRAVITY * elapsedTime));
-
-		// calcula deslocamento x e y de acordo com a variação de tempo
-		// x = V * t (espaço percorrido = velocidade * tempo)
-		float novaPosicaoX = getX() + (getVelocityX() * elapsedTime);
-		float novaPosicaoY = getY() + (getVelocityY() * elapsedTime);
-
-		boolean colisaoX = world.getTileMap().getSpriteTileCollision(this, novaPosicaoX, getY()) != null;
-		boolean colisaoY = world.getTileMap().getSpriteTileCollision(this, getX(), novaPosicaoY) != null;
-
-		if (colisaoX) collideHorizontal();
-		else setX(novaPosicaoX); // Se não colidir atualiza a nova posição X
-
-		if (colisaoY) collideVertical();
-		else setY(novaPosicaoY); // Se não colidir atualiza a nova posição Y
-
+		// Verifica se está no chão
 		if (getVelocityY() == 0.0f) {
 			onGround = true;
 			getJumpLeftAnimation().initConfig();
 			getJumpRightAnimation().initConfig();
 		}
 
+		// A gravidade afeta o sprite (atuação da gravidade).
+		this.setVelocityY(this.getVelocityY() + (GRAVITY * elapsedTime));
+
+		// Guarda uma referência para a animação anterior
+		// para posterior verificação de diferença dos tamanhos das imagens.
 		Animation oldAnimation = getAnimation();
 
-		// Seleciona a anima��o correta
+		// Seleciona a animação correta
 		if (isJumping()) {
 			if (isTurnedRight()) this.setAnimation(getJumpRightAnimation());
 			else this.setAnimation(getJumpLeftAnimation());
@@ -160,33 +147,47 @@ public class MegaMan extends Sprite {
 		// Atualiza imagem da animação
 		getAnimation().update( elapsedTime );
 
-		// Verifica colisões com a nova animação
-		boolean colisaoXNovaAnimacao = world.getTileMap().getSpriteTileCollision(this, getX(), getY()) != null;
-		boolean colisaoYNovaAnimacao= world.getTileMap().getSpriteTileCollision(this, getX(), getY()) != null;
+		// calcula deslocamento x e y de acordo com a variação de tempo
+		// x = V * t (espaço percorrido = velocidade * tempo)
+		float novaPosicaoX = getX() + (getVelocityX() * elapsedTime);
+		float novaPosicaoY = getY() + (getVelocityY() * elapsedTime);
 
-		// Ajuste das posições de acordo com novas animações
-		if (colisaoXNovaAnimacao) {
+		boolean colisaoX = getWorld().getTileMap().getSpriteTileCollision(this, novaPosicaoX, getY()) != null;
+		boolean colisaoY = getWorld().getTileMap().getSpriteTileCollision(this, getX(), novaPosicaoY) != null;
+
+		if (colisaoX) {
+
+			setVelocityX(0.0f);
+
+			// Verifica diferença do tamanho das imagens.
 			float diff = getAnimation().getImage().getWidth(null) - oldAnimation.getImage().getWidth(null);
-			System.out.println("diff: "+diff);
 			setX(getX() - diff);
-		} if (colisaoYNovaAnimacao) {
+
+		} else setX(novaPosicaoX); // Se não colidir atualiza a nova posição X
+
+		if (colisaoY) {
+
+			setVelocityY(0.0f);
+
+			// Verifica diferença do tamanho das imagens.
 			float diff = getAnimation().getImage().getHeight(null) - oldAnimation.getImage().getHeight(null);
 			setY(getY() - diff);
-		}
+
+		} else setY(novaPosicaoY); // Se não colidir atualiza a nova posição Y
 
 	}
-	
+
 	/**
-     * Chamado antes de update() se a criatura colidiu com um tile 
+     * Chamado antes de update() se a criatura colidiu com um tile
      * horizontalmente.
      */
     public void collideHorizontal() {
         setVelocityX(0.0f);
     }
-    
-    
+
+
     /**
-     * Chamado antes de update() se a criatura colidiu com um tile 
+     * Chamado antes de update() se a criatura colidiu com um tile
      * verticalmente.
      */
     public void collideVertical() {

@@ -5,6 +5,7 @@ import me.dabpessoa.map.TileMap;
 import me.dabpessoa.map.TileMapRenderer;
 import me.dabpessoa.sprite.Cowboy;
 import me.dabpessoa.sprite.MegaMan;
+import me.dabpessoa.sprite.Quadrado;
 import me.dabpessoa.sprite.Sprite;
 
 import javax.swing.*;
@@ -43,7 +44,9 @@ public class World {
 
         MegaMan megaMan = new MegaMan(this);
         Cowboy cowboy = new Cowboy(this);
+        Quadrado quadrado = new Quadrado(this);
 
+//        setPlayer(quadrado);
         setPlayer(megaMan);
 //        addSprite(cowboy);
 //        setPlayer(cowboy);
