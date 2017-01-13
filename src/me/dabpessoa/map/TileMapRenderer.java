@@ -96,8 +96,6 @@ public class TileMapRenderer {
         }
         
         // desenha os tiles visíveis
-        System.out.println("offX: "+offsetX);
-        System.out.println("offY: "+offsetY);
         int firstTileX = pixelsToTiles( -offsetX );
         int lastTileX = firstTileX +
                 pixelsToTiles( visibleScreenWidth ) + 1;
