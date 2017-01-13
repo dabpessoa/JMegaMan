@@ -10,8 +10,8 @@ import me.dabpessoa.sprite.Sprite;
 
 public class TileMapRenderer {
 
-	private static final int TILE_SIZE = 32;
-    private static final int TILE_SIZE_BITS = 5;
+    private static final int TILE_SHIFT_SIZE_BITS = 5;
+    public static final int TILE_SIZE = 1<< TILE_SHIFT_SIZE_BITS;
     private Image background;
 
     private World world;
@@ -32,7 +32,7 @@ public class TileMapRenderer {
      */
     public static int pixelsToTiles(int pixels) {
         // usa deslocamento para obter os valores corretos para pixels negativos
-        return pixels >> TILE_SIZE_BITS;
+        return pixels >> TILE_SHIFT_SIZE_BITS;
         
         // ou, se o tamanho dos tiles n�o forem pot�ncia de dois, usa o m�todo 
         // floor():
@@ -44,12 +44,12 @@ public class TileMapRenderer {
      * Converte a posi��o de um tile para a posi��o em pixel.
      */
     public static int tilesToPixels(int numTiles) {
-        // sem raz�o real para usar deslocamento aqui.
-        // o seu uso � um pouco mais r�pido, mas nos processadores modernos isso 
-        // quase n�o faz diferen�a
-        return numTiles << TILE_SIZE_BITS;
+        // sem razão real para usar deslocamento aqui.
+        // o seu uso é um pouco mais rápido, mas nos processadores modernos isso
+        // quase não faz diferença
+        return numTiles << TILE_SHIFT_SIZE_BITS;
         
-        // se o tamanho dos tiles n�o forem pot�ncia de dois,
+        // se o tamanho dos tiles não forem potência de dois,
         // return numTiles * TILE_SIZE;
     }
     
@@ -60,61 +60,62 @@ public class TileMapRenderer {
     public Image getBackground() {
 		return background;
 	}
-    
+
     /**
      * Desenha o Map especificado.
      */
-    public void draw( Graphics g, TileMap map,
-            int screenWidth, int screenHeight ) {
+    public void draw( Graphics g, TileMap tileMap,
+            int visibleScreenWidth, int visibleScreenHeight ) {
+
+        // Recupera a largura do mapa de tiles.
+        int totalTilesMapWidth = tilesToPixels( tileMap.getWidth() );
         
-//        Sprite player = map.getPlayer();
-        int mapWidth = tilesToPixels( map.getWidth() );
-        
-        // obt�m a posi��o de scrolling do mapa, baseado na posi��o do jogador
-        int offsetX = (screenWidth / 2) - Math.round( world.getPlayer().getX() ) - TILE_SIZE;
+        // obtêm a posição de scrolling do mapa, baseado na posição do jogador
+        int offsetX = (visibleScreenWidth / 2) - Math.round( world.getPlayer().getX() ) - TILE_SIZE;
         offsetX = Math.min( offsetX, 0 );
-        offsetX = Math.max( offsetX, screenWidth - mapWidth );
-//        int offsetX = screenWidth - tilesToPixels(map.getWidth()); 
+        offsetX = Math.max( offsetX, visibleScreenWidth - totalTilesMapWidth );
         
-        // obt�m o offset de y para desenhar todas as sprites e tiles
-        int offsetY = screenHeight - tilesToPixels( map.getHeight() ) - TILE_SIZE;
-        
-//        int offsetX = 0;
-//        int offsetY = 0;
-        
-        // desenha um fundo preto se necess�rio
+        // obtêm o offset de y para desenhar todas as sprites e tiles
+        int offsetY = visibleScreenHeight - tilesToPixels( tileMap.getHeight() ) - TILE_SIZE;
+
+        // desenha um fundo preto se necessário
         if ( background == null ||
-                screenHeight > background.getHeight( null ) ) {
+                visibleScreenHeight > background.getHeight( null ) ) {
             g.setColor( Color.BLACK );
-            g.fillRect( 0, 0, screenWidth, screenHeight );
+            g.fillRect( 0, 0, visibleScreenWidth, visibleScreenHeight );
         }
         
         // desenha a imagem de fundo usando parallax
         if ( background != null ) {
             int x = offsetX *
-                    ( screenWidth - background.getWidth( null ) ) /
-                    ( screenWidth - mapWidth );
-            int y = screenHeight - background.getHeight( null );
+                    ( visibleScreenWidth - background.getWidth( null ) ) /
+                    ( visibleScreenWidth - totalTilesMapWidth );
+            int y = visibleScreenHeight - background.getHeight( null );
             
             g.drawImage( background, x, y, null );
         }
         
-        // desenha os tiles vis�veis
+        // desenha os tiles visíveis
+        System.out.println("offX: "+offsetX);
+        System.out.println("offY: "+offsetY);
         int firstTileX = pixelsToTiles( -offsetX );
         int lastTileX = firstTileX +
-                pixelsToTiles( screenWidth ) + 1;
-        for ( int y = 0; y < map.getHeight(); y++ ) {
+                pixelsToTiles( visibleScreenWidth ) + 1;
+        for ( int y = 0; y < tileMap.getHeight(); y++ ) {
             for ( int x = firstTileX; x <= lastTileX; x++ ) {
-            	Tile tile = map.getTile( x, y );
+            	Tile tile = tileMap.getTile( x, y );
             	Image image = null;
             	if (tile != null) {
             		image = tile.getImage();
             	}
-//                Image image = map.getTile( x, y ).getImage();
                 if ( image != null ) {
+                    int tileX = tilesToPixels( x ) + offsetX;
+                    int tileY = tilesToPixels( y ) + offsetY;
+                    tile.setX(tileX);
+                    tile.setY(tileY);
                     g.drawImage( image,
-                            tilesToPixels( x ) + offsetX,
-                            tilesToPixels( y ) + offsetY,
+                            (int)tile.getX(),
+                            (int)tile.getY(),
                             null );
                 }
             }

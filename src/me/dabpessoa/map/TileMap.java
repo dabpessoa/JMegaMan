@@ -9,19 +9,14 @@ import me.dabpessoa.sprite.Sprite;
 public class TileMap {
 
 	private Tile[][] tiles;
-//	private LinkedList<Sprite> sprites;
-//	private Sprite player;
 	 
-	public TileMap() {
-//        this.sprites = new LinkedList<Sprite>();
-	}
+	public TileMap() {}
 
 	 /**
      * Cria um novo TileMap com a largura e altura especificada
      * (em n�mero de peda�os) do mapa.
      */
     public TileMap( int width, int height ) {
-//    	this.sprites = new LinkedList<Sprite>();
         tiles = new Tile[ width ][ height ];
     } 
     
@@ -53,12 +48,40 @@ public class TileMap {
         }
     }
 
+    public boolean checkColision(Sprite sprite, float newPositionX, float newPositionY) {
+
+        float newBottomRightX = newPositionX + sprite.getWidth();
+        float newBottomRightY = newPositionY + sprite.getHeight();
+
+        if (isPointColideTile(newPositionX, newPositionY) ||
+            isPointColideTile(newBottomRightX, newBottomRightY)) {
+            return true;
+        }
+        return false;
+
+    }
+
+    // x e y em pixels
+    public boolean isPointColideTile(float x, float y) {
+        for (int linha = 0 ; linha < tiles.length ; linha++) {
+            for (int coluna = 0 ; coluna < tiles[linha].length ; coluna++) {
+                Tile tile = tiles[linha][coluna];
+                if (tile != null) {
+                    if ( (x >= tile.getX() && x <= (tile.getX()+tile.getWidth()) ) &&
+                         (y >= tile.getY() && y <= (tile.getY()+tile.getHeight())) ) {
+                        return true;
+                    }
+                }
+            }
+        } return false;
+    }
+
     /**
-     * Obt�m o tile que a Sprite colide. Somente X ou Y da Sprite deve ser
-     * mudado n�o ambos. Retorna null se nenhuma colis�o for detectada.
+     * Obtém o tile que a Sprite colide. Somente X ou Y da Sprite deve ser
+     * mudado não ambos. Retorna null se nenhuma colisão for detectada.
      */
-    public Point getSpriteTileCollision(Sprite sprite,
-                                        float newX, float newY) {
+    public Point getSpriteTileCollisionPoint(Sprite sprite,
+                                             float newX, float newY) {
 
         Point pointCache = new Point();
 
@@ -67,7 +90,7 @@ public class TileMap {
         float toX = Math.max( sprite.getX(), newX );
         float toY = Math.max( sprite.getY(), newY );
 
-        // obtem a localiza��o do tile
+        // obtem a localização do tile
         int fromTileX = TileMapRenderer.pixelsToTiles( fromX );
         int fromTileY = TileMapRenderer.pixelsToTiles( fromY );
         int toTileX = TileMapRenderer.pixelsToTiles(
@@ -75,14 +98,14 @@ public class TileMap {
         int toTileY = TileMapRenderer.pixelsToTiles(
                 toY + sprite.getHeight());
 
-        // checa cada tile para verificar a colis�o
+        // checa cada tile para verificar a colisão
         for ( int x = fromTileX; x <= toTileX; x++ ) {
 
             for ( int y = fromTileY; y <= toTileY; y++ ) {
 
                 if ( x < 0 || x >= getWidth() || y < 0 || y >= getHeight() ||
                         getTile( x, y ) != null ) {
-                    // colis�o achada, retorna o tile
+                    // colisão achada, retorna o tile
                     pointCache.setLocation( x, y );
                     return pointCache;
                 }
@@ -109,14 +132,14 @@ public class TileMap {
     }
 
     /**
-     * Configura o peda�o no local especificado.
+     * Configura o pedaço no local especificado.
      */
     public void setTile( int x, int y, Tile tile ) {
         tiles[ x ][ y ] = tile;
     }
     
     /**
-     * Configura o peda�o no local especificado.
+     * Configura o pedaço no local especificado.
      */
     public void setTile( int x, int y, Image image) {
         tiles[ x ][ y ] = new Tile(image);
@@ -129,24 +152,5 @@ public class TileMap {
 	public void setTiles(Tile[][] tiles) {
 		this.tiles = tiles;
 	}
-	
-//	public void setSprites(LinkedList<Sprite> sprites) {
-//		this.sprites = sprites;
-//	}
-
-//	public void setPlayer(Sprite player) {
-//		this.player = player;
-//	}
-//
-//	public Sprite getPlayer() {
-//		return player;
-//	}
-	
-	/**
-     * Obt�m o Iterator de todas as Sprites desse mapa, menos a do jogador.
-     */
-//    public Iterator<Sprite> getSprites() {
-//        return sprites.iterator();
-//    }
 
 }

@@ -26,26 +26,18 @@ public class Quadrado extends Sprite {
         float novaPosicaoX = getX() + (getVelocityX() * elapsedTime);
         float novaPosicaoY = getY() + (getVelocityY() * elapsedTime);
 
-        boolean colisaoX = getWorld().getTileMap().getSpriteTileCollision(this, novaPosicaoX, getY()) != null;
-        boolean colisaoY = getWorld().getTileMap().getSpriteTileCollision(this, getX(), novaPosicaoY) != null;
+        boolean colisaoX = getWorld().getTileMap().getSpriteTileCollisionPoint(this, novaPosicaoX, getY()) != null;
+        boolean colisaoY = getWorld().getTileMap().getSpriteTileCollisionPoint(this, getX(), novaPosicaoY) != null;
 
         if (colisaoX) {
 
             setVelocityX(0.0f);
-
-            // Verifica diferença do tamanho das imagens.
-            float diff = getAnimation().getImage().getWidth(null) - oldAnimation.getImage().getWidth(null);
-            setX(getX() - diff);
 
         } else setX(novaPosicaoX); // Se não colidir atualiza a nova posição X
 
         if (colisaoY) {
 
             setVelocityY(0.0f);
-
-            // Verifica diferença do tamanho das imagens.
-            float diff = getAnimation().getImage().getHeight(null) - oldAnimation.getImage().getHeight(null);
-            setY(getY() - diff);
 
         } else setY(novaPosicaoY); // Se não colidir atualiza a nova posição Y
 

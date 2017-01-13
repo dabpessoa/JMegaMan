@@ -152,8 +152,8 @@ public class MegaMan extends Sprite {
 		float novaPosicaoX = getX() + (getVelocityX() * elapsedTime);
 		float novaPosicaoY = getY() + (getVelocityY() * elapsedTime);
 
-		boolean colisaoX = getWorld().getTileMap().getSpriteTileCollision(this, novaPosicaoX, getY()) != null;
-		boolean colisaoY = getWorld().getTileMap().getSpriteTileCollision(this, getX(), novaPosicaoY) != null;
+		boolean colisaoX = getWorld().getTileMap().getSpriteTileCollisionPoint(this, novaPosicaoX, getY()) != null;
+		boolean colisaoY = getWorld().getTileMap().getSpriteTileCollisionPoint(this, getX(), novaPosicaoY) != null;
 
 		if (colisaoX) {
 

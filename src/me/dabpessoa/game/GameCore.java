@@ -83,19 +83,19 @@ public class GameCore implements LoopSteps {
 
 		if (moveRight.isPressed()) {
 			if (sprite instanceof  MegaMan) ((MegaMan)sprite).setTurnedRight(true);
-			sprite.setVelocityX(0.13f);
+			sprite.setVelocityX(0.07f);
 		} else if (moveLeft.isPressed()) {
 			if (sprite instanceof  MegaMan)  ((MegaMan)sprite).setTurnedRight(false);
-			sprite.setVelocityX(-0.13f);
+			sprite.setVelocityX(-0.07f);
 		} else {
 			sprite.setVelocityX(0);
 		}
 
 		if (sprite instanceof Quadrado) {
 			if (up.isPressed()) {
-				sprite.setVelocityY(-0.13f);
+				sprite.setVelocityY(-0.07f);
 			} else if (down.isPressed()) {
-				sprite.setVelocityY(0.13f);
+				sprite.setVelocityY(0.07f);
 			} else {
 				sprite.setVelocityY(0);
 			}
