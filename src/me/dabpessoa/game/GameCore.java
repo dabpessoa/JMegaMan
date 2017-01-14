@@ -105,13 +105,10 @@ public class GameCore implements LoopSteps {
 
 	@Override
 	public void renderGraphics() {
-		
-		/*
-		 * Aqui todos os sprites ser�o pintados na tela.
-		 */
+
 		Graphics g = world.getCanvas().getBufferStrategy().getDrawGraphics();
 		
-		//Criamos um contexto gr�fico que n�o leva em conta as bordas
+		//Criamos um contexto gráfico que não leva em conta as bordas
 		Graphics g2 = g.create(world.getCanvas().getInsets().right,
 				world.getCanvas().getInsets().top,
 				world.getCanvas().getWidth() - world.getCanvas().getInsets().left,
