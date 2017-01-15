@@ -5,19 +5,18 @@ import java.awt.Image;
 public class Tile {
 	
 	private Image image;
-	private float x;
-	private float y;
-	private float width;
-	private float height;
-	private boolean throwable;
+	private int x;
+	private int y;
+	private int width;
+	private int height;
 	
-	public Tile() {
-		this.width = TileMapRenderer.TILE_SIZE;
-		this.height = TileMapRenderer.TILE_SIZE;
+	public Tile(int width, int height) {
+		this.width = width;
+		this.height = height;
 	}
 	
-	public Tile(Image image) {
-		this();
+	public Tile(Image image, int tileWidth, int tileHeight) {
+		this(tileWidth, tileHeight);
 		this.image = image;
 	}
 
@@ -29,44 +28,36 @@ public class Tile {
 		this.image = image;
 	}
 
-	public float getWidth() {
-		return width;
-	}
-
-	public void setWidth(float width) {
-		this.width = width;
-	}
-
-	public float getHeight() {
-		return height;
-	}
-
-	public void setHeight(float height) {
-		this.height = height;
-	}
-
-	public float getX() {
+	public int getX() {
 		return x;
 	}
 
-	public void setX(float x) {
+	public void setX(int x) {
 		this.x = x;
 	}
 
-	public float getY() {
+	public int getY() {
 		return y;
 	}
 
-	public void setY(float y) {
+	public void setY(int y) {
 		this.y = y;
 	}
 
-	public boolean isThrowable() {
-		return throwable;
+	public int getWidth() {
+		return width;
 	}
-	
-	public void setThrowable(boolean throwable) {
-		this.throwable = throwable;
+
+	public void setWidth(int width) {
+		this.width = width;
 	}
-	
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
 }

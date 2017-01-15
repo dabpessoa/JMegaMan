@@ -1,9 +1,14 @@
 package me.dabpessoa.sprite;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 
 import me.dabpessoa.game.World;
 import me.dabpessoa.manager.ResourceManager;
+import me.dabpessoa.map.TileMapRenderer;
+import me.dabpessoa.test.CollisionInfo;
+import me.dabpessoa.test.CollisionType;
+import me.dabpessoa.test.TileCollision;
+import org.w3c.dom.css.Rect;
 
 public class MegaMan extends Sprite {
 
@@ -77,28 +82,28 @@ public class MegaMan extends Sprite {
 		idleLeftAnimation.addFrame(resourceManager.loadImage("megaman/idle/left/idle6.png"), 1650);
 
 		Animation jumpLeftAnimation = new Animation();
-		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump1.png"), 75);
-		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump2.png"), 75);
-		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump3.png"), 75);
-		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump4.png"), 75);
-		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump5.png"), 75);
-		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump6.png"), 75);
-		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump7.png"), 75);
-		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump8.png"), 75);
-		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump9.png"), 75);
-		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump10.png"), 75);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump1.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump2.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump3.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump4.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump5.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump6.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump7.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump8.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump9.png"), 80);
+		jumpLeftAnimation.addFrame(resourceManager.loadImage("megaman/jump/left/jump10.png"), 80);
 
 		Animation jumpRightAnimation = new Animation();
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump1.png"), 75);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump2.png"), 75);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump3.png"), 75);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump4.png"), 75);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump5.png"), 75);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump6.png"), 75);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump7.png"), 75);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump8.png"), 75);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump9.png"), 75);
-		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump10.png"), 75);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump1.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump2.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump3.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump4.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump5.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump6.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump7.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump8.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump9.png"), 80);
+		jumpRightAnimation.addFrame(resourceManager.loadImage("megaman/jump/right/jump10.png"), 80);
 
 		this.setIdleLeftAnimation(idleLeftAnimation);
 		this.setIdleRightAnimation(idleRightAnimation);

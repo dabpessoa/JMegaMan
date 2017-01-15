@@ -46,8 +46,8 @@ public class World {
         Cowboy cowboy = new Cowboy(this);
         Quadrado quadrado = new Quadrado(this);
 
-//        setPlayer(quadrado);
-        setPlayer(megaMan);
+        setPlayer(quadrado);
+//        setPlayer(megaMan);
 //        addSprite(cowboy);
 //        setPlayer(cowboy);
 //        addSprite(megaMan);

@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 
 import me.dabpessoa.map.Tile;
 import me.dabpessoa.map.TileMap;
+import me.dabpessoa.map.TileMapRenderer;
 
 public class ResourceManager {
 	
@@ -40,7 +41,7 @@ public class ResourceManager {
         while ( ch <= max ) {
             
             String name = "tile_" + ch + ".png";
-            tiles.add( new Tile(loadImage( name )) );
+            tiles.add( new Tile(loadImage( name ), TileMapRenderer.TILE_SIZE, TileMapRenderer.TILE_SIZE) );
             ch++;
             
         }

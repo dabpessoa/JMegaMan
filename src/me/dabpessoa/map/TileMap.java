@@ -142,7 +142,7 @@ public class TileMap {
      * Configura o pedaço no local especificado.
      */
     public void setTile( int x, int y, Image image) {
-        tiles[ x ][ y ] = new Tile(image);
+        tiles[ x ][ y ] = new Tile(image, TileMapRenderer.TILE_SIZE, TileMapRenderer.TILE_SIZE);
     }
 
 	public Tile[][] getTiles() {
