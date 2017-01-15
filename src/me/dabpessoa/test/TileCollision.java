@@ -35,53 +35,74 @@ public class TileCollision {
         Point bottomRight = new Point((rect.x + rect.width), (rect.y + rect.height));
 
         Point fromPoint, toPoint;
+        int count;
 
         // Check right collision
         fromPoint = topRight;
         toPoint = bottomRight;
-        for(int i = fromPoint.y ; i <= toPoint.y ; i += tileHeight) {
-            Point point = new Point(fromPoint.x, i);
+        count = fromPoint.y;
+        while (count <= toPoint.y) {
+            Point point = new Point(fromPoint.x, count);
             T tile = findTileFromCoordinate(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
                 collisionInfo.addCollisionType(CollisionType.RIGHT);
                 collisionInfo.getNotCollideRect().x = tile.getX() - collisionInfo.getNotCollideRect().width;
             }
+
+            if (count == toPoint.y) break;
+            count += tileHeight;
+            if (count > toPoint.y) count = toPoint.y;
         }
 
         // Check bottom collision
         fromPoint = bottomLeft;
         toPoint = bottomRight;
-        for(int i = fromPoint.x ; i <= toPoint.x ; i += tileWidth) {
-            Point point = new Point(i, fromPoint.y);
+        count = fromPoint.x;
+        while (count <= toPoint.x) {
+            Point point = new Point(count, fromPoint.y);
             T tile = findTileFromCoordinate(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
                 collisionInfo.addCollisionType(CollisionType.BOTTOM);
                 collisionInfo.getNotCollideRect().y = tile.getY() - collisionInfo.getNotCollideRect().height;
             }
+
+            if (count == toPoint.x) break;
+            count += tileWidth;
+            if (count > toPoint.x) count = toPoint.x;
         }
 
         // Check left collision
         fromPoint = topLeft;
         toPoint = bottomLeft;
-        for(int i = fromPoint.y ; i <= toPoint.y ; i += tileHeight) {
-            Point point = new Point(fromPoint.x, i);
+        count = fromPoint.y;
+        while (count <= toPoint.y) {
+            Point point = new Point(fromPoint.x, count);
             T tile = findTileFromCoordinate(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
                 collisionInfo.addCollisionType(CollisionType.LEFT);
                 collisionInfo.getNotCollideRect().x = tile.getX() + tile.getWidth();
             }
+
+            if (count == toPoint.y) break;
+            count += tileHeight;
+            if (count > toPoint.y) count = toPoint.y;
         }
 
         // Check top collision
         fromPoint = topLeft;
         toPoint = topRight;
-        for(int i = fromPoint.x ; i <= toPoint.x ; i += tileWidth) {
-            Point point = new Point(i, fromPoint.y);
+        count = fromPoint.x;
+        while (count <= toPoint.x) {
+            Point point = new Point(count, fromPoint.y);
             T tile = findTileFromCoordinate(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
                 collisionInfo.addCollisionType(CollisionType.TOP);
                 collisionInfo.getNotCollideRect().y = tile.getY() + tile.getHeight();
             }
+
+            if (count == toPoint.x) break;
+            count += tileWidth;
+            if (count > toPoint.x) count = toPoint.x;
         }
 
         return collisionInfo;
