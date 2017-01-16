@@ -1,6 +1,7 @@
 package me.dabpessoa.test;
 
 import me.dabpessoa.map.Tile;
+import me.dabpessoa.util.ListUtils;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -94,6 +95,14 @@ public class TileCollisionInfo {
 
     public boolean hasOnlyBottomLeftCornerCollision() {
         return hasBottomLeftCornerCollision() && !hasBottomRightCornerCollision() && !hasTopLeftCornerCollision() && !hasTopRightCornerCollision();
+    }
+
+    public boolean hasAllSidesCollision() {
+        return hasTopCollision() && hasRightCollision() && hasBottomCollision() && hasLeftCollision();
+    }
+
+    public List<Tile> findBiggestTilesSizeCollisionSide(int place) {
+        return (List<Tile>) ListUtils.bigger(place, getRightTilesCollision(), getBottomTilesCollision(), getLeftTilesCollision(), getTopTilesCollision());
     }
 
     public void addCollisionType(CollisionType collisionType) {
