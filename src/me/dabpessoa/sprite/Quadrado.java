@@ -36,7 +36,6 @@ public class Quadrado extends Sprite {
         Rectangle rect = new Rectangle(Math.round(novaPosicaoX), Math.round(novaPosicaoY), getAnimation().getImage().getWidth(null), getAnimation().getImage().getHeight(null));
         TileCollisionInfo tileCollisionInfo = TileCollision.checkCollision(getWorld().getTileMap().getTiles(), rect, TileMapRenderer.TILE_SIZE, TileMapRenderer.TILE_SIZE);
 
-        System.out.println("Colidiu: "+ tileCollisionInfo.hasAnyCollision());
         if (tileCollisionInfo.hasLeftCollision() || tileCollisionInfo.hasRightCollision()) {
             setVelocityX(0.0f);
             setX(tileCollisionInfo.getNotCollideRect().x);
@@ -50,9 +49,6 @@ public class Quadrado extends Sprite {
         } else {
             setY(novaPosicaoY);
         }
-
-        System.out.println("X: "+getX());
-        System.out.println("Y: "+getY());
 
     }
 

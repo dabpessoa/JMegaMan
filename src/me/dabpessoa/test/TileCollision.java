@@ -51,6 +51,7 @@ public class TileCollision {
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.RIGHT);
                 tileCollisionInfo.addRightTileCollision(tile);
+                System.out.println("RIGHT COLLISION");
             }
 
             if (count == toPoint.y) break;
@@ -68,6 +69,7 @@ public class TileCollision {
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.BOTTOM);
                 tileCollisionInfo.addBottomTileCollision(tile);
+                System.out.println("BOTTOM COLLISION");
             }
 
             if (count == toPoint.x) break;
@@ -85,6 +87,7 @@ public class TileCollision {
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.LEFT);
                 tileCollisionInfo.addLeftTileCollision(tile);
+                System.out.println("LEFT COLLISION");
             }
 
             if (count == toPoint.y) break;
@@ -102,6 +105,7 @@ public class TileCollision {
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.TOP);
                 tileCollisionInfo.addTopTileCollision(tile);
+                System.out.println("TOP COLLISION");
             }
 
             if (count == toPoint.x) break;
