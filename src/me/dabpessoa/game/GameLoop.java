@@ -186,7 +186,7 @@ public class GameLoop implements Runnable
      * minor than the necessary.The number of total skips are limited to
      * MAX_FRAME_SKIPS.
      * 
-     * @param exceededTime The exceeded time. If the time is bigger enough to
+     * @param exceededTime The exceeded time. If the time is biggerSizeList enough to
      *        skip one or more frames, they will be skipped.
      * @return The remaining excess time, after the skips.
      */

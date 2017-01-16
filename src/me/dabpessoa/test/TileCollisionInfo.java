@@ -102,7 +102,7 @@ public class TileCollisionInfo {
     }
 
     public List<Tile> findBiggestTilesSizeCollisionSide(int place) {
-        return (List<Tile>) ListUtils.bigger(place, getRightTilesCollision(), getBottomTilesCollision(), getLeftTilesCollision(), getTopTilesCollision());
+        return (List<Tile>) ListUtils.biggerSizeList(place, getRightTilesCollision(), getBottomTilesCollision(), getLeftTilesCollision(), getTopTilesCollision());
     }
 
     public void addCollisionType(CollisionType collisionType) {
