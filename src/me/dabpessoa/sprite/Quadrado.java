@@ -39,14 +39,14 @@ public class Quadrado extends Sprite {
         System.out.println("Colidiu: "+ tileCollisionInfo.hasAnyCollision());
         if (tileCollisionInfo.hasLeftCollision() || tileCollisionInfo.hasRightCollision()) {
             setVelocityX(0.0f);
-//            setX(tileCollisionInfo.getNotCollideRect().x);
+            setX(tileCollisionInfo.getNotCollideRect().x);
         } else {
             setX(novaPosicaoX);
         }
 
         if (tileCollisionInfo.hasTopCollision() || tileCollisionInfo.hasBottomCollision()) {
             setVelocityY(0.0f);
-//            setY(tileCollisionInfo.getNotCollideRect().y);
+            setY(tileCollisionInfo.getNotCollideRect().y);
         } else {
             setY(novaPosicaoY);
         }

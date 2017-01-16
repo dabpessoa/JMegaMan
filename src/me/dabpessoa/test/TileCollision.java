@@ -50,7 +50,7 @@ public class TileCollision {
             T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.RIGHT);
-                tileCollisionInfo.getNotCollideRect().x = tile.getPixelX() - tileCollisionInfo.getNotCollideRect().width;
+                tileCollisionInfo.addRightTileCollision(tile);
             }
 
             if (count == toPoint.y) break;
@@ -67,7 +67,7 @@ public class TileCollision {
             T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.BOTTOM);
-                tileCollisionInfo.getNotCollideRect().y = tile.getPixelY() - tileCollisionInfo.getNotCollideRect().height;
+                tileCollisionInfo.addBottomTileCollision(tile);
             }
 
             if (count == toPoint.x) break;
@@ -84,7 +84,7 @@ public class TileCollision {
             T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.LEFT);
-                tileCollisionInfo.getNotCollideRect().x = tile.getPixelX() + tile.getWidth();
+                tileCollisionInfo.addLeftTileCollision(tile);
             }
 
             if (count == toPoint.y) break;
@@ -101,7 +101,7 @@ public class TileCollision {
             T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.TOP);
-                tileCollisionInfo.getNotCollideRect().y = tile.getPixelY() + tile.getHeight();
+                tileCollisionInfo.addTopTileCollision(tile);
             }
 
             if (count == toPoint.x) break;
@@ -109,6 +109,7 @@ public class TileCollision {
             if (count > toPoint.x) count = toPoint.x;
         }
 
+        // Caso haja colisão, redefinir posicionamento de um retângulo para o mesmo representar um objeto que não colide.
         if (tileCollisionInfo.hasAnyCollision()) {
             if (tileCollisionInfo.hasTopLeftCornerCollision() && tileCollisionInfo.hasTopRightCornerCollision() && tileCollisionInfo.hasBottomLeftCornerCollision()) {
                 // topLeftCollision_CORNER_MAP
@@ -120,12 +121,20 @@ public class TileCollision {
                 // bottomLeftCollision_CORNER_MAP
             } else if ((tileCollisionInfo.hasTopRightCornerCollision() && tileCollisionInfo.hasBottomRightCornerCollision()) || tileCollisionInfo.hasOnlyRightCollision()) {
                 // rightCollision_WALL
+                Tile tileCollision = tileCollisionInfo.getRightTilesCollision().get(0);
+                tileCollisionInfo.getNotCollideRect().x = tileCollision.getPixelX() - tileCollisionInfo.getNotCollideRect().width;
             } else if ((tileCollisionInfo.hasBottomLeftCornerCollision() && tileCollisionInfo.hasBottomRightCornerCollision()) || tileCollisionInfo.hasOnlyBottomCollision()) {
                 // bottomCollision_WALL
+                Tile tileCollision = tileCollisionInfo.getBottomTilesCollision().get(0);
+                tileCollisionInfo.getNotCollideRect().y = tileCollision.getPixelY() - tileCollisionInfo.getNotCollideRect().height;
             } else if ((tileCollisionInfo.hasBottomLeftCornerCollision() && tileCollisionInfo.hasTopLeftCornerCollision()) || tileCollisionInfo.hasOnlyLeftCollision()) {
                 // leftCollision_WALL
+                Tile tileCollision = tileCollisionInfo.getLeftTilesCollision().get(0);
+                tileCollisionInfo.getNotCollideRect().x = tileCollision.getPixelX() + tileCollision.getWidth();
             } else if ((tileCollisionInfo.hasTopLeftCornerCollision() && tileCollisionInfo.hasTopRightCornerCollision()) || tileCollisionInfo.hasOnlyTopCollision()) {
                 // topCollision_WALL
+                Tile tileCollision = tileCollisionInfo.getTopTilesCollision().get(0);
+                tileCollisionInfo.getNotCollideRect().y = tileCollision.getPixelY() + tileCollision.getHeight();
             } else if (tileCollisionInfo.hasOnlyTopRightCornerCollision()) {
                 // topRight_CORNER
             } else if (tileCollisionInfo.hasOnlyTopLeftCornerCollilsion()) {
