@@ -109,6 +109,34 @@ public class TileCollision {
             if (count > toPoint.x) count = toPoint.x;
         }
 
+        if (tileCollisionInfo.hasAnyCollision()) {
+            if (tileCollisionInfo.hasTopLeftCornerCollision() && tileCollisionInfo.hasTopRightCornerCollision() && tileCollisionInfo.hasBottomLeftCornerCollision()) {
+                // topLeftCollision_CORNER_MAP
+            } else if (tileCollisionInfo.hasTopRightCornerCollision() && tileCollisionInfo.hasBottomRightCornerCollision() && tileCollisionInfo.hasTopLeftCornerCollision()) {
+                // topRightCollision_CORNER_MAP
+            } else if (tileCollisionInfo.hasBottomRightCornerCollision() && tileCollisionInfo.hasTopRightCornerCollision() && tileCollisionInfo.hasBottomLeftCornerCollision()) {
+                // bottomRightCollision_CORNER_MAP
+            } else if (tileCollisionInfo.hasBottomLeftCornerCollision() && tileCollisionInfo.hasTopLeftCornerCollision() && tileCollisionInfo.hasBottomRightCornerCollision()) {
+                // bottomLeftCollision_CORNER_MAP
+            } else if ((tileCollisionInfo.hasTopRightCornerCollision() && tileCollisionInfo.hasBottomRightCornerCollision()) || tileCollisionInfo.hasOnlyRightCollision()) {
+                // rightCollision_WALL
+            } else if ((tileCollisionInfo.hasBottomLeftCornerCollision() && tileCollisionInfo.hasBottomRightCornerCollision()) || tileCollisionInfo.hasOnlyBottomCollision()) {
+                // bottomCollision_WALL
+            } else if ((tileCollisionInfo.hasBottomLeftCornerCollision() && tileCollisionInfo.hasTopLeftCornerCollision()) || tileCollisionInfo.hasOnlyLeftCollision()) {
+                // leftCollision_WALL
+            } else if ((tileCollisionInfo.hasTopLeftCornerCollision() && tileCollisionInfo.hasTopRightCornerCollision()) || tileCollisionInfo.hasOnlyTopCollision()) {
+                // topCollision_WALL
+            } else if (tileCollisionInfo.hasOnlyTopRightCornerCollision()) {
+                // topRight_CORNER
+            } else if (tileCollisionInfo.hasOnlyTopLeftCornerCollilsion()) {
+                // topLeft_CORNER
+            } else if (tileCollisionInfo.hasOnlyBottomRightCornerCollision()) {
+                // bottomRight_CONER
+            } else if (tileCollisionInfo.hasOnlyBottomLeftCornerCollision()) {
+                // bottomLeft_CORNER
+            }
+        }
+
         return tileCollisionInfo;
 
     }

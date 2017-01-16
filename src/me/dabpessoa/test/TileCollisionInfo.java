@@ -53,6 +53,40 @@ public class TileCollisionInfo {
             return hasBottomCollision() && hasLeftCollision();
         }
 
+        public boolean hasOnlyBottomCollision() {
+            return hasBottomCollision() && !hasRightCollision() && !hasLeftCollision() && !hasTopCollision();
+        }
+
+        public boolean hasOnlyTopCollision() {
+            return !hasBottomCollision() && !hasRightCollision() && !hasLeftCollision() && hasTopCollision();
+        }
+
+        public boolean hasOnlyLeftCollision() {
+            return !hasBottomCollision() && !hasRightCollision() && hasLeftCollision() && !hasTopCollision();
+        }
+
+        public boolean hasOnlyRightCollision() {
+            return !hasBottomCollision() && hasRightCollision() && !hasLeftCollision() && !hasTopCollision();
+        }
+
+        public boolean hasOnlyTopRightCornerCollision() {
+            return !hasBottomLeftCornerCollision() && !hasBottomRightCornerCollision() && !hasTopLeftCornerCollision() && hasTopRightCornerCollision();
+        }
+
+        public boolean hasOnlyTopLeftCornerCollilsion() {
+            return !hasBottomLeftCornerCollision() && !hasBottomRightCornerCollision() && hasTopLeftCornerCollision() && !hasTopRightCornerCollision();
+        }
+
+        public boolean hasOnlyBottomRightCornerCollision() {
+            return !hasBottomLeftCornerCollision() && hasBottomRightCornerCollision() && !hasTopLeftCornerCollision() && !hasTopRightCornerCollision();
+        }
+
+        public boolean hasOnlyBottomLeftCornerCollision() {
+            return hasBottomLeftCornerCollision() && !hasBottomRightCornerCollision() && !hasTopLeftCornerCollision() && !hasTopRightCornerCollision();
+        }
+
+
+
         public void addCollisionType(CollisionType collisionType) {
             if (!collisionsType.contains(collisionType)) {
                 collisionsType.add(collisionType);
