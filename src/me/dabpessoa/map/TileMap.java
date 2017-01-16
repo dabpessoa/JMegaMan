@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import me.dabpessoa.sprite.Sprite;
+import me.dabpessoa.test.TileCollision;
 
 public class TileMap {
 
@@ -67,8 +68,8 @@ public class TileMap {
             for (int coluna = 0 ; coluna < tiles[linha].length ; coluna++) {
                 Tile tile = tiles[linha][coluna];
                 if (tile != null) {
-                    if ( (x >= tile.getX() && x <= (tile.getX()+tile.getWidth()) ) &&
-                         (y >= tile.getY() && y <= (tile.getY()+tile.getHeight())) ) {
+                    if ( (x >= tile.getPixelX() && x <= (tile.getPixelX()+tile.getWidth()) ) &&
+                         (y >= tile.getPixelY() && y <= (tile.getPixelY()+tile.getHeight())) ) {
                         return true;
                     }
                 }
@@ -143,6 +144,9 @@ public class TileMap {
      */
     public void setTile( int x, int y, Image image) {
         tiles[ x ][ y ] = new Tile(image, TileMapRenderer.TILE_SIZE, TileMapRenderer.TILE_SIZE);
+        Point pixelPoint = TileCollision.findPixelFromTileMatrizPosition(x, y, image.getWidth(null), image.getHeight(null));
+        tiles[x][y].setPixelX(pixelPoint.x);
+        tiles[x][y].setPixelY(pixelPoint.y);
     }
 
 	public Tile[][] getTiles() {

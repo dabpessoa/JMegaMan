@@ -109,12 +109,7 @@ public class TileMapRenderer {
                 if ( image != null ) {
                     int tileX = tilesToPixels( x ) + offsetX;
                     int tileY = tilesToPixels( y ) + offsetY;
-                    tile.setX(tileX);
-                    tile.setY(tileY);
-                    g.drawImage( image,
-                            (int)tile.getX(),
-                            (int)tile.getY(),
-                            null );
+                    g.drawImage( image, tileX, tileY, null );
                 }
             }
         }

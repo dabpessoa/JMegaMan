@@ -52,19 +52,8 @@ public class Quadrado extends Sprite {
             setY(novaPosicaoY);
         }
 
-
-
-//        if (colisaoX) {
-//
-//            setVelocityX(0.0f);
-//
-//        } else setX(novaPosicaoX); // Se não colidir atualiza a nova posição X
-//
-//        if (colisaoY) {
-//
-//            setVelocityY(0.0f);
-//
-//        } else setY(novaPosicaoY); // Se não colidir atualiza a nova posição Y
+        System.out.println("X: "+getX());
+        System.out.println("Y: "+getY());
 
     }
 

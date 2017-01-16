@@ -5,8 +5,8 @@ import java.awt.Image;
 public class Tile {
 	
 	private Image image;
-	private int x;
-	private int y;
+	private int pixelX;
+	private int pixelY;
 	private int width;
 	private int height;
 	
@@ -28,20 +28,20 @@ public class Tile {
 		this.image = image;
 	}
 
-	public int getX() {
-		return x;
+	public int getPixelX() {
+		return pixelX;
 	}
 
-	public void setX(int x) {
-		this.x = x;
+	public void setPixelX(int pixelX) {
+		this.pixelX = pixelX;
 	}
 
-	public int getY() {
-		return y;
+	public int getPixelY() {
+		return pixelY;
 	}
 
-	public void setY(int y) {
-		this.y = y;
+	public void setPixelY(int pixelY) {
+		this.pixelY = pixelY;
 	}
 
 	public int getWidth() {
