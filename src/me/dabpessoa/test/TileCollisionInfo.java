@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollisionInfo {
+public class TileCollisionInfo {
 
         private List<CollisionType> collisionsType;
         private Rectangle notCollideRect;
@@ -13,7 +13,7 @@ public class CollisionInfo {
         private boolean hasLeftCollision;
         private boolean hasTopCollision;
 
-        public CollisionInfo() {
+        public TileCollisionInfo() {
             collisionsType = new ArrayList<>();
         }
 
@@ -35,6 +35,22 @@ public class CollisionInfo {
 
         public boolean hasTopCollision() {
             return hasTopCollision;
+        }
+
+        public boolean hasTopRightCornerCollision() {
+            return hasTopCollision() && hasRightCollision();
+        }
+
+        public boolean hasTopLeftCornerCollision() {
+            return hasTopCollision() && hasLeftCollision();
+        }
+
+        public boolean hasBottomRightCornerCollision() {
+            return hasBottomCollision() && hasRightCollision();
+        }
+
+        public boolean hasBottomLeftCornerCollision() {
+            return hasBottomCollision() && hasLeftCollision();
         }
 
         public void addCollisionType(CollisionType collisionType) {

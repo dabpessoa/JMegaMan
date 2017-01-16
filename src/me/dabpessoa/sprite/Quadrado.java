@@ -3,8 +3,7 @@ package me.dabpessoa.sprite;
 import me.dabpessoa.game.World;
 import me.dabpessoa.manager.ResourceManager;
 import me.dabpessoa.map.TileMapRenderer;
-import me.dabpessoa.test.CollisionInfo;
-import me.dabpessoa.test.CollisionType;
+import me.dabpessoa.test.TileCollisionInfo;
 import me.dabpessoa.test.TileCollision;
 
 import java.awt.*;
@@ -35,19 +34,19 @@ public class Quadrado extends Sprite {
 
 
         Rectangle rect = new Rectangle(Math.round(novaPosicaoX), Math.round(novaPosicaoY), getAnimation().getImage().getWidth(null), getAnimation().getImage().getHeight(null));
-        CollisionInfo collisionInfo = TileCollision.checkCollision(getWorld().getTileMap().getTiles(), rect, TileMapRenderer.TILE_SIZE, TileMapRenderer.TILE_SIZE);
+        TileCollisionInfo tileCollisionInfo = TileCollision.checkCollision(getWorld().getTileMap().getTiles(), rect, TileMapRenderer.TILE_SIZE, TileMapRenderer.TILE_SIZE);
 
-        System.out.println("Colidiu: "+collisionInfo.hasAnyCollision());
-        if (collisionInfo.hasLeftCollision() || collisionInfo.hasRightCollision()) {
+        System.out.println("Colidiu: "+ tileCollisionInfo.hasAnyCollision());
+        if (tileCollisionInfo.hasLeftCollision() || tileCollisionInfo.hasRightCollision()) {
             setVelocityX(0.0f);
-//            setX(collisionInfo.getNotCollideRect().x);
+//            setX(tileCollisionInfo.getNotCollideRect().x);
         } else {
             setX(novaPosicaoX);
         }
 
-        if (collisionInfo.hasTopCollision() || collisionInfo.hasBottomCollision()) {
+        if (tileCollisionInfo.hasTopCollision() || tileCollisionInfo.hasBottomCollision()) {
             setVelocityY(0.0f);
-//            setY(collisionInfo.getNotCollideRect().y);
+//            setY(tileCollisionInfo.getNotCollideRect().y);
         } else {
             setY(novaPosicaoY);
         }

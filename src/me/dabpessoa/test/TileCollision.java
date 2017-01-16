@@ -4,8 +4,6 @@ import me.dabpessoa.map.Tile;
 
 import java.awt.Rectangle;
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by dabpessoa on 14/01/2017.
@@ -28,11 +26,11 @@ public class TileCollision {
         return rectangle1.intersects(rectangle2);
     }
 
-    public static <T extends Tile> CollisionInfo checkCollision(T[][] tilesMatriz, Rectangle rect, int tileWidth, int tileHeight) {
+    public static <T extends Tile> TileCollisionInfo checkCollision(T[][] tilesMatriz, Rectangle rect, int tileWidth, int tileHeight) {
 
         Rectangle notCollideRect = new Rectangle(rect.x, rect.y, rect.width, rect.height);
-        CollisionInfo collisionInfo = new CollisionInfo();
-        collisionInfo.setNotCollideRect(notCollideRect);
+        TileCollisionInfo tileCollisionInfo = new TileCollisionInfo();
+        tileCollisionInfo.setNotCollideRect(notCollideRect);
 
         // Descobrindo as quinas do retângulo
         Point topLeft = new Point(rect.x, rect.y);
@@ -51,8 +49,8 @@ public class TileCollision {
             Point point = new Point(fromPoint.x, count);
             T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
-                collisionInfo.addCollisionType(CollisionType.RIGHT);
-                collisionInfo.getNotCollideRect().x = tile.getPixelX() - collisionInfo.getNotCollideRect().width;
+                tileCollisionInfo.addCollisionType(CollisionType.RIGHT);
+                tileCollisionInfo.getNotCollideRect().x = tile.getPixelX() - tileCollisionInfo.getNotCollideRect().width;
             }
 
             if (count == toPoint.y) break;
@@ -68,8 +66,8 @@ public class TileCollision {
             Point point = new Point(count, fromPoint.y);
             T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
-                collisionInfo.addCollisionType(CollisionType.BOTTOM);
-                collisionInfo.getNotCollideRect().y = tile.getPixelY() - collisionInfo.getNotCollideRect().height;
+                tileCollisionInfo.addCollisionType(CollisionType.BOTTOM);
+                tileCollisionInfo.getNotCollideRect().y = tile.getPixelY() - tileCollisionInfo.getNotCollideRect().height;
             }
 
             if (count == toPoint.x) break;
@@ -85,8 +83,8 @@ public class TileCollision {
             Point point = new Point(fromPoint.x, count);
             T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
-                collisionInfo.addCollisionType(CollisionType.LEFT);
-                collisionInfo.getNotCollideRect().x = tile.getPixelX() + tile.getWidth();
+                tileCollisionInfo.addCollisionType(CollisionType.LEFT);
+                tileCollisionInfo.getNotCollideRect().x = tile.getPixelX() + tile.getWidth();
             }
 
             if (count == toPoint.y) break;
@@ -102,8 +100,8 @@ public class TileCollision {
             Point point = new Point(count, fromPoint.y);
             T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
             if (tile != null) {
-                collisionInfo.addCollisionType(CollisionType.TOP);
-                collisionInfo.getNotCollideRect().y = tile.getPixelY() + tile.getHeight();
+                tileCollisionInfo.addCollisionType(CollisionType.TOP);
+                tileCollisionInfo.getNotCollideRect().y = tile.getPixelY() + tile.getHeight();
             }
 
             if (count == toPoint.x) break;
@@ -111,7 +109,7 @@ public class TileCollision {
             if (count > toPoint.x) count = toPoint.x;
         }
 
-        return collisionInfo;
+        return tileCollisionInfo;
 
     }
 

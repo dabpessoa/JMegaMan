@@ -4,11 +4,6 @@ import java.awt.*;
 
 import me.dabpessoa.game.World;
 import me.dabpessoa.manager.ResourceManager;
-import me.dabpessoa.map.TileMapRenderer;
-import me.dabpessoa.test.CollisionInfo;
-import me.dabpessoa.test.CollisionType;
-import me.dabpessoa.test.TileCollision;
-import org.w3c.dom.css.Rect;
 
 public class MegaMan extends Sprite {
 
