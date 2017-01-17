@@ -53,7 +53,6 @@ public class TileCollision {
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.RIGHT);
                 tileCollisionInfo.addRightTileCollision(tile);
-                System.out.println("RIGHT COLLISION");
             }
 
             if (count == toPoint.y) break;
@@ -71,7 +70,6 @@ public class TileCollision {
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.BOTTOM);
                 tileCollisionInfo.addBottomTileCollision(tile);
-                System.out.println("BOTTOM COLLISION");
             }
 
             if (count == toPoint.x) break;
@@ -89,7 +87,6 @@ public class TileCollision {
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.LEFT);
                 tileCollisionInfo.addLeftTileCollision(tile);
-                System.out.println("LEFT COLLISION");
             }
 
             if (count == toPoint.y) break;
@@ -107,7 +104,6 @@ public class TileCollision {
             if (tile != null) {
                 tileCollisionInfo.addCollisionType(CollisionType.TOP);
                 tileCollisionInfo.addTopTileCollision(tile);
-                System.out.println("TOP COLLISION");
             }
 
             if (count == toPoint.x) break;
@@ -162,6 +158,17 @@ public class TileCollision {
                     // topRight_CORNER
                     if (movimentDirection == MovimentDirection.LEFT_TO_RIGHT_AND_BOTTOM_TO_TOP) {
 
+                        System.out.println("LEFT_TO_RIGHT_AND_BOTTOM_TO_TOP");
+
+//                        Tile tileCollision = tileCollisionInfo.getTopTilesCollision().get(0);
+//                        int diffX = topRight.x - tileCollision.getPixelX();
+//                        int diffY = tileCollision.getPixelY() - topRight.y;
+//                        if (diffX > diffY) {
+//                            updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+//                        } else {
+//                            updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.RIGHT);
+//                        }
+
                     } else if (movimentDirection == MovimentDirection.LEFT_TO_RIGHT) {
                         updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
                     } else if (movimentDirection == MovimentDirection.BOTTOM_TO_TOP) {
@@ -170,6 +177,8 @@ public class TileCollision {
                 } else if (tileCollisionInfo.hasOnlyTopLeftCornerCollilsion()) {
                     // topLeft_CORNER
                     if (movimentDirection == MovimentDirection.RIGHT_TO_LEFT_AND_BOTTOM_TO_TOP) {
+
+                        System.out.println("RIGHT_TO_LEFT_AND_BOTTOM_TO_TOP");
 
                     } else if (movimentDirection == MovimentDirection.RIGHT_TO_LEFT) {
                         updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
@@ -180,6 +189,8 @@ public class TileCollision {
                     // bottomRight_CONER
                     if (movimentDirection == MovimentDirection.LEFT_TO_RIGHT_AND_TOP_TO_BOTTOM) {
 
+                        System.out.println("LEFT_TO_RIGHT_AND_TOP_TO_BOTTOM");
+
                     } else if (movimentDirection == MovimentDirection.LEFT_TO_RIGHT) {
                         updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
                     } else if (movimentDirection == MovimentDirection.TOP_TO_BOTTOM) {
@@ -188,6 +199,8 @@ public class TileCollision {
                 } else if (tileCollisionInfo.hasOnlyBottomLeftCornerCollision()) {
                     // bottomLeft_CORNER
                     if (movimentDirection == MovimentDirection.RIGHT_TO_LEFT_AND_TOP_TO_BOTTOM) {
+
+                        System.out.println("RIGHT_TO_LEFT_AND_TOP_TO_BOTTOM");
 
                     } else if (movimentDirection == MovimentDirection.RIGHT_TO_LEFT) {
                         updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
