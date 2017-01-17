@@ -158,16 +158,16 @@ public class TileCollision {
                     // topRight_CORNER
                     if (movimentDirection == MovimentDirection.LEFT_TO_RIGHT_AND_BOTTOM_TO_TOP) {
 
-                        System.out.println("LEFT_TO_RIGHT_AND_BOTTOM_TO_TOP");
-
-//                        Tile tileCollision = tileCollisionInfo.getTopTilesCollision().get(0);
-//                        int diffX = topRight.x - tileCollision.getPixelX();
-//                        int diffY = tileCollision.getPixelY() - topRight.y;
-//                        if (diffX > diffY) {
-//                            updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
-//                        } else {
-//                            updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.RIGHT);
-//                        }
+                        Tile tileCollision = tileCollisionInfo.getTopTilesCollision().get(0);
+                        int diffX = topRight.x - tileCollision.getPixelX();
+                        int diffY = (tileCollision.getPixelY() + tileCollision.getHeight() -1) - topRight.y;
+                        if (diffX < diffY) {
+                            // collide right
+                            updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
+                        } else {
+                            // collide top
+                            updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+                        }
 
                     } else if (movimentDirection == MovimentDirection.LEFT_TO_RIGHT) {
                         updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
@@ -179,6 +179,17 @@ public class TileCollision {
                     if (movimentDirection == MovimentDirection.RIGHT_TO_LEFT_AND_BOTTOM_TO_TOP) {
 
                         System.out.println("RIGHT_TO_LEFT_AND_BOTTOM_TO_TOP");
+
+                        Tile tileCollision = tileCollisionInfo.getTopTilesCollision().get(0);
+                        int diffX = (tileCollision.getPixelX() + tileCollision.getWidth() - 1) - topLeft.x;
+                        int diffY = (tileCollision.getPixelY() + tileCollision.getHeight() -1) - topRight.y;
+                        if (diffX < diffY) {
+                            // collide left
+                            updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
+                        } else {
+                            // collide top
+                            updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+                        }
 
                     } else if (movimentDirection == MovimentDirection.RIGHT_TO_LEFT) {
                         updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
