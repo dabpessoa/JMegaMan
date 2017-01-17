@@ -3,6 +3,7 @@ package me.dabpessoa.sprite;
 import me.dabpessoa.game.World;
 import me.dabpessoa.manager.ResourceManager;
 import me.dabpessoa.map.TileMapRenderer;
+import me.dabpessoa.test.MovimentDirection;
 import me.dabpessoa.test.TileCollisionInfo;
 import me.dabpessoa.test.TileCollision;
 
@@ -32,9 +33,9 @@ public class Quadrado extends Sprite {
         boolean colisaoX = getWorld().getTileMap().getSpriteTileCollisionPoint(this, novaPosicaoX, getY()) != null;
         boolean colisaoY = getWorld().getTileMap().getSpriteTileCollisionPoint(this, getX(), novaPosicaoY) != null;
 
-
+        MovimentDirection movimentDirection = MovimentDirection.findMovimentDirection(new Point(Math.round(getX()), Math.round(getY())), new Point(Math.round(novaPosicaoX), Math.round(novaPosicaoY)));
         Rectangle rect = new Rectangle(Math.round(novaPosicaoX), Math.round(novaPosicaoY), getAnimation().getImage().getWidth(null), getAnimation().getImage().getHeight(null));
-        TileCollisionInfo tileCollisionInfo = TileCollision.checkCollision(getWorld().getTileMap().getTiles(), rect, TileMapRenderer.TILE_SIZE, TileMapRenderer.TILE_SIZE);
+        TileCollisionInfo tileCollisionInfo = TileCollision.checkCollision(getWorld().getTileMap().getTiles(), rect, TileMapRenderer.TILE_SIZE, TileMapRenderer.TILE_SIZE, movimentDirection);
 
         if (tileCollisionInfo.hasLeftCollision() || tileCollisionInfo.hasRightCollision()) {
             setVelocityX(0.0f);
