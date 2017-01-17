@@ -34,11 +34,11 @@ public class TileCollision {
         TileCollisionInfo tileCollisionInfo = new TileCollisionInfo();
         tileCollisionInfo.setNotCollideRect(notCollideRect);
 
-        // Descobrindo as quinas do retângulo
+        // Descobrindo as quinas do retângulo. OBS: Obrigatório a subtração por "-1" em alguns pontos.
         Point topLeft = new Point(rect.x, rect.y);
-        Point topRight = new Point((rect.x + rect.width), rect.y);
-        Point bottomLeft = new Point(rect.x, (rect.y + rect.height));
-        Point bottomRight = new Point((rect.x + rect.width), (rect.y + rect.height));
+        Point topRight = new Point((rect.x + rect.width - 1), rect.y);
+        Point bottomLeft = new Point(rect.x, (rect.y + rect.height -1));
+        Point bottomRight = new Point((rect.x + rect.width - 1), (rect.y + rect.height -1));
 
         Point fromPoint, toPoint;
         int count;

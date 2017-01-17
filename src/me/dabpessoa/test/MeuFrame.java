@@ -17,7 +17,10 @@ public class MeuFrame extends JFrame {
             Graphics g = canvas.getBufferStrategy().getDrawGraphics();
 
             g.setColor( Color.BLACK );
-            g.fillRect( 30, 50, 50, 50 );
+            g.fillRect( 0, 0, 50, 50 );
+
+            g.setColor( Color.GRAY );
+            g.fillRect( 0, 50, 50, 50 );
 
             g.setColor( Color.GREEN );
             g.fillRect( 80, 50, 50, 50 );
