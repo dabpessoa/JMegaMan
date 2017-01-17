@@ -52,8 +52,6 @@ public class World {
 //        setPlayer(cowboy);
 //        addSprite(megaMan);
 
-
-
     }
 
     public void start() {
