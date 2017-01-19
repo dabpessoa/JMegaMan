@@ -1,8 +1,6 @@
 package me.dabpessoa.test;
 
 import me.dabpessoa.map.Tile;
-import me.dabpessoa.util.MapUtils;
-import org.w3c.dom.css.Rect;
 
 import java.awt.Rectangle;
 import java.awt.Point;
@@ -41,84 +39,80 @@ public class TileCollision {
         Point bottomLeft = new Point(rect.x, (rect.y + rect.height -1));
         Point bottomRight = new Point((rect.x + rect.width - 1), (rect.y + rect.height -1));
 
-        Point fromPoint, toPoint;
-        int count;
-
         // Check right collision
-        fromPoint = topRight;
-        toPoint = bottomRight;
-        count = fromPoint.y;
-        while (count <= toPoint.y) {
-            Point point = new Point(fromPoint.x, count);
-            T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
-            if (tile != null) {
-                tileCollisionInfo.addCollisionType(CollisionType.RIGHT);
-                tileCollisionInfo.addRightTileCollision(tile);
-            }
-
-            if (count == toPoint.y) break;
-            count += tileHeight;
-            if (count > toPoint.y) count = toPoint.y;
-        }
+        checkTileCollision(CollisionType.RIGHT, topRight, bottomRight, tilesMatriz, tileWidth, tileHeight, tileCollisionInfo);
 
         // Check bottom collision
-        fromPoint = bottomLeft;
-        toPoint = bottomRight;
-        count = fromPoint.x;
-        while (count <= toPoint.x) {
-            Point point = new Point(count, fromPoint.y);
-            T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
-            if (tile != null) {
-                tileCollisionInfo.addCollisionType(CollisionType.BOTTOM);
-                tileCollisionInfo.addBottomTileCollision(tile);
-            }
-
-            if (count == toPoint.x) break;
-            count += tileWidth;
-            if (count > toPoint.x) count = toPoint.x;
-        }
+        checkTileCollision(CollisionType.BOTTOM, bottomLeft, bottomRight, tilesMatriz, tileWidth, tileHeight, tileCollisionInfo);
 
         // Check left collision
-        fromPoint = topLeft;
-        toPoint = bottomLeft;
-        count = fromPoint.y;
-        while (count <= toPoint.y) {
-            Point point = new Point(fromPoint.x, count);
-            T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
-            if (tile != null) {
-                tileCollisionInfo.addCollisionType(CollisionType.LEFT);
-                tileCollisionInfo.addLeftTileCollision(tile);
-            }
-
-            if (count == toPoint.y) break;
-            count += tileHeight;
-            if (count > toPoint.y) count = toPoint.y;
-        }
+        checkTileCollision(CollisionType.LEFT, topLeft, bottomLeft, tilesMatriz, tileWidth, tileHeight, tileCollisionInfo);
 
         // Check top collision
-        fromPoint = topLeft;
-        toPoint = topRight;
-        count = fromPoint.x;
-        while (count <= toPoint.x) {
-            Point point = new Point(count, fromPoint.y);
-            T tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
-            if (tile != null) {
-                tileCollisionInfo.addCollisionType(CollisionType.TOP);
-                tileCollisionInfo.addTopTileCollision(tile);
-            }
+        checkTileCollision(CollisionType.TOP, topLeft, topRight, tilesMatriz, tileWidth, tileHeight, tileCollisionInfo);
 
-            if (count == toPoint.x) break;
-            count += tileWidth;
-            if (count > toPoint.x) count = toPoint.x;
-        }
-
-        checkPositionForNotCollideRect(tileCollisionInfo, rect, movimentDirection);
+        // Calculate position for NotCollideRect
+        calcPositionForNotCollideRect(tileCollisionInfo, rect, movimentDirection);
 
         return tileCollisionInfo;
 
     }
 
-    public static void checkPositionForNotCollideRect(TileCollisionInfo tileCollisionInfo, Rectangle rect, MovimentDirection movimentDirection) {
+    private static void checkTileCollision(CollisionType collisionType, Point fromPoint, Point toPoint, Tile[][] tilesMatriz, int tileWidth, int tileHeight, TileCollisionInfo tileCollisionInfo) {
+        int from, to; from = to = -1;
+        if (collisionType == CollisionType.LEFT || collisionType == CollisionType.RIGHT) {
+            from =  fromPoint.y;
+            to = toPoint.y;
+        } else if (collisionType == CollisionType.TOP || collisionType == CollisionType.BOTTOM) {
+            from = fromPoint.x;
+            to = toPoint.x;
+        }
+
+        while (from <= to) {
+            Point point  = (collisionType == CollisionType.LEFT || collisionType == CollisionType.RIGHT ? new Point(fromPoint.x, from) :
+                            collisionType == CollisionType.TOP || collisionType == CollisionType.BOTTOM ? new Point(from, fromPoint.y) :
+                            null);
+
+            Tile tile = findTileFromPixelPosition(tilesMatriz, point, tileWidth, tileHeight);
+
+            if (collisionType == CollisionType.LEFT) {
+                if (tile != null) {
+                    tileCollisionInfo.addLeftTileCollision(tile);
+                    tileCollisionInfo.addCollisionType(collisionType);
+                }
+                if (from == toPoint.y) break;
+                from += tileHeight;
+                if (from > toPoint.y) from = toPoint.y;
+            } else if (collisionType == CollisionType.RIGHT) {
+                if (tile != null) {
+                    tileCollisionInfo.addRightTileCollision(tile);
+                    tileCollisionInfo.addCollisionType(collisionType);
+                }
+                if (from == toPoint.y) break;
+                from += tileHeight;
+                if (from > toPoint.y) from = toPoint.y;
+            } else if (collisionType == CollisionType.TOP) {
+                if (tile != null) {
+                    tileCollisionInfo.addTopTileCollision(tile);
+                    tileCollisionInfo.addCollisionType(collisionType);
+                }
+                if (from == toPoint.x) break;
+                from += tileWidth;
+                if (from > toPoint.x) from = toPoint.x;
+            } else if (collisionType == CollisionType.BOTTOM) {
+                if (tile != null) {
+                    tileCollisionInfo.addBottomTileCollision(tile);
+                    tileCollisionInfo.addCollisionType(collisionType);
+                }
+                if (from == toPoint.x) break;
+                from += tileWidth;
+                if (from > toPoint.x) from = toPoint.x;
+            } else throw new RuntimeException("Invalid Collision Type => "+collisionType);
+
+        }
+    }
+
+    public static void calcPositionForNotCollideRect(TileCollisionInfo tileCollisionInfo, Rectangle rect, MovimentDirection movimentDirection) {
         // Caso haja colisão, redefinir posicionamento de um retângulo para o mesmo representar um objeto que não colide.
         if (tileCollisionInfo.hasAnyCollision()) {
 
