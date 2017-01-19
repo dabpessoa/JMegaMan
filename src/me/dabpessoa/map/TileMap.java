@@ -1,11 +1,9 @@
 package me.dabpessoa.map;
 
 import java.awt.*;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 import me.dabpessoa.sprite.Sprite;
-import me.dabpessoa.test.TileCollision;
+import me.dabpessoa.manager.collision.TileCollision;
 
 public class TileMap {
 

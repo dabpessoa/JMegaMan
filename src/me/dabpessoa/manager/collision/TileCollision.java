@@ -1,4 +1,4 @@
-package me.dabpessoa.test;
+package me.dabpessoa.manager.collision;
 
 import me.dabpessoa.map.Tile;
 
@@ -58,7 +58,7 @@ public class TileCollision {
 
     }
 
-    private static void checkTileCollision(CollisionType collisionType, Point fromPoint, Point toPoint, Tile[][] tilesMatriz, int tileWidth, int tileHeight, TileCollisionInfo tileCollisionInfo) {
+    public static void checkTileCollision(CollisionType collisionType, Point fromPoint, Point toPoint, Tile[][] tilesMatriz, int tileWidth, int tileHeight, TileCollisionInfo tileCollisionInfo) {
         int from, to; from = to = -1;
         if (collisionType == CollisionType.LEFT || collisionType == CollisionType.RIGHT) {
             from =  fromPoint.y;

@@ -1,4 +1,4 @@
-package me.dabpessoa.test;
+package me.dabpessoa.manager.collision;
 
 import java.awt.*;
 

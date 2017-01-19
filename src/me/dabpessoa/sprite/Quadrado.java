@@ -3,9 +3,9 @@ package me.dabpessoa.sprite;
 import me.dabpessoa.game.World;
 import me.dabpessoa.manager.ResourceManager;
 import me.dabpessoa.map.TileMapRenderer;
-import me.dabpessoa.test.MovimentDirection;
-import me.dabpessoa.test.TileCollisionInfo;
-import me.dabpessoa.test.TileCollision;
+import me.dabpessoa.manager.collision.MovimentDirection;
+import me.dabpessoa.manager.collision.TileCollisionInfo;
+import me.dabpessoa.manager.collision.TileCollision;
 
 import java.awt.*;
 
