@@ -2,6 +2,7 @@ package me.dabpessoa.test;
 
 import me.dabpessoa.map.Tile;
 import me.dabpessoa.util.MapUtils;
+import org.w3c.dom.css.Rect;
 
 import java.awt.Rectangle;
 import java.awt.Point;
@@ -111,8 +112,21 @@ public class TileCollision {
             if (count > toPoint.x) count = toPoint.x;
         }
 
+        checkPositionForNotCollideRect(tileCollisionInfo, rect, movimentDirection);
+
+        return tileCollisionInfo;
+
+    }
+
+    public static void checkPositionForNotCollideRect(TileCollisionInfo tileCollisionInfo, Rectangle rect, MovimentDirection movimentDirection) {
         // Caso haja colisão, redefinir posicionamento de um retângulo para o mesmo representar um objeto que não colide.
         if (tileCollisionInfo.hasAnyCollision()) {
+
+            // Descobrindo as quinas do retângulo. OBS: Obrigatório a subtração por "-1" em alguns pontos.
+            Point topLeft = new Point(rect.x, rect.y);
+            Point topRight = new Point((rect.x + rect.width - 1), rect.y);
+            Point bottomLeft = new Point(rect.x, (rect.y + rect.height -1));
+            Point bottomRight = new Point((rect.x + rect.width - 1), (rect.y + rect.height -1));
 
             // Colidiu em uma quina do mapa.
             if (tileCollisionInfo.hasAllSidesCollision()) {
@@ -291,9 +305,6 @@ public class TileCollision {
             }
 
         }
-
-        return tileCollisionInfo;
-
     }
 
     public static Tile findBiggestTileX(List<Tile> tiles) {
