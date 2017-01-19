@@ -150,8 +150,8 @@ public class TileCollision {
                     updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
 
                     if (movimentDirection.isGoingToRight()) {
-                        Rectangle minimumRightY =  findMinimumY(Tile.createRectangles(tileCollisionInfo.getRightTilesCollision()));
-                        if (minimumRightY.y < tileCollisionInfo.getBottomTilesCollision().get(0).getPixelY()) {
+                        Tile minimumRightY =  findMinimumTileY(tileCollisionInfo.getRightTilesCollision());
+                        if (minimumRightY.getPixelY() < tileCollisionInfo.getBottomTilesCollision().get(0).getPixelY()) {
                             // collisionRight
                             System.out.println("foi... funfou.. "); // TODO implementar nas outras colisões
                             updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
@@ -231,6 +231,30 @@ public class TileCollision {
 
     }
 
+    public static Tile findBiggestTileX(List<Tile> tiles) {
+        Tile biggestOne = null;
+        if (tiles != null) {
+            for (Tile tile : tiles) {
+                if (biggestOne == null || biggestOne.getPixelX() < tile.getPixelX()) {
+                    biggestOne = tile;
+                }
+            }
+        }
+        return biggestOne;
+    }
+
+    public static Tile findBiggestTileY(List<Tile> tiles) {
+        Tile biggestOne = null;
+        if (tiles != null) {
+            for (Tile tile : tiles) {
+                if (biggestOne == null || biggestOne.getPixelY() < tile.getPixelY()) {
+                    biggestOne = tile;
+                }
+            }
+        }
+        return biggestOne;
+    }
+
     public static Rectangle findBiggestX(List<Rectangle> rectangles) {
         Rectangle biggestOne = null;
         if (rectangles != null) {
@@ -253,6 +277,30 @@ public class TileCollision {
             }
         }
         return biggestOne;
+    }
+
+    public static Tile findMinimumTileX(List<Tile> tiles) {
+        Tile minimumOne = null;
+        if (tiles != null) {
+            for (Tile tile : tiles) {
+                if (minimumOne == null || tile.getPixelX() < minimumOne.getPixelX()) {
+                    minimumOne = tile;
+                }
+            }
+        }
+        return minimumOne;
+    }
+
+    public static Tile findMinimumTileY(List<Tile> tiles) {
+        Tile minimumOne = null;
+        if (tiles != null) {
+            for (Tile tile : tiles) {
+                if (minimumOne == null || tile.getPixelY() < minimumOne.getPixelY()) {
+                    minimumOne = tile;
+                }
+            }
+        }
+        return minimumOne;
     }
 
     public static Rectangle findMinimumX(List<Rectangle> rectangles) {
