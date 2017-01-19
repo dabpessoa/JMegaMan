@@ -28,7 +28,7 @@ public enum MovimentDirection {
         return isGoingToBottom(this);
     }
 
-    public boolean isGointToTop() {
+    public boolean isGoingToTop() {
         return isGointToTop(this);
     }
 

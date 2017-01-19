@@ -5,12 +5,12 @@
 #   (Espa�o) Tile Vazio
 #   A..Z     Tiles A through Z
 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-A                                     A
+A                          A          A
 A       AAAA                          A
-A                                     A
+AA                                    A
 A                                     A
 A   AA                                A
-A                                     A
+A                                    AA
 A                                     A
 A     A                               A
 A                         A           A
