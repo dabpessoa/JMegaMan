@@ -39,6 +39,11 @@ public class TileCollision {
         Point bottomLeft = new Point(rect.x, (rect.y + rect.height -1));
         Point bottomRight = new Point((rect.x + rect.width - 1), (rect.y + rect.height -1));
 
+        /*
+           A checagem das colisões não podem depender da direção para onde o jogador está indo,
+           pois pode ser que as paredes (tiles) se desloquem também cansando colisão mesmo sem o jogador se mover.
+         */
+
         // Check right collision
         checkTileCollision(CollisionType.RIGHT, topRight, bottomRight, tilesMatriz, tileWidth, tileHeight, tileCollisionInfo);
 
