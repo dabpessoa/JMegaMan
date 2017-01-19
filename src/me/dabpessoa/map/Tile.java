@@ -1,6 +1,9 @@
 package me.dabpessoa.map;
 
 import java.awt.Image;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tile {
 	
@@ -18,6 +21,20 @@ public class Tile {
 	public Tile(Image image, int tileWidth, int tileHeight) {
 		this(tileWidth, tileHeight);
 		this.image = image;
+	}
+
+	public Rectangle createRectangle() {
+		return new Rectangle(pixelX, pixelY, width, height);
+	}
+
+	public static List<Rectangle> createRectangles(List<Tile> tiles) {
+		List<Rectangle> rectangles = new ArrayList<Rectangle>();
+		if (tiles != null) {
+			for (Tile tile : tiles) {
+				rectangles.add(tile.createRectangle());
+			}
+		}
+		return rectangles;
 	}
 
 	public Image getImage() {

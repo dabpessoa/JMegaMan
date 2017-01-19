@@ -148,6 +148,17 @@ public class TileCollision {
                 } else if ((tileCollisionInfo.hasBottomLeftCornerCollision() && tileCollisionInfo.hasBottomRightCornerCollision()) || tileCollisionInfo.hasOnlyBottomCollision()) {
                     // bottomCollision_WALL
                     updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
+
+                    if (movimentDirection.isGoingToRight()) {
+                        Rectangle minimumRightY =  findMinimumY(Tile.createRectangles(tileCollisionInfo.getRightTilesCollision()));
+                        if (minimumRightY.y < tileCollisionInfo.getBottomTilesCollision().get(0).getPixelY()) {
+                            // collisionRight
+                            System.out.println("foi... funfou.. "); // TODO implementar nas outras colisões
+                            updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
+                        }
+
+                    }
+
                 } else if ((tileCollisionInfo.hasBottomLeftCornerCollision() && tileCollisionInfo.hasTopLeftCornerCollision()) || tileCollisionInfo.hasOnlyLeftCollision()) {
                     // leftCollision_WALL
                     updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
@@ -218,6 +229,54 @@ public class TileCollision {
 
         return tileCollisionInfo;
 
+    }
+
+    public static Rectangle findBiggestX(List<Rectangle> rectangles) {
+        Rectangle biggestOne = null;
+        if (rectangles != null) {
+            for (Rectangle rectangle : rectangles) {
+                if (biggestOne == null || biggestOne.x < rectangle.x) {
+                    biggestOne = rectangle;
+                }
+            }
+        }
+        return biggestOne;
+    }
+
+    public static Rectangle findBiggestY(List<Rectangle> rectangles) {
+        Rectangle biggestOne = null;
+        if (rectangles != null) {
+            for (Rectangle rectangle : rectangles) {
+                if (biggestOne == null || biggestOne.y < rectangle.y) {
+                    biggestOne = rectangle;
+                }
+            }
+        }
+        return biggestOne;
+    }
+
+    public static Rectangle findMinimumX(List<Rectangle> rectangles) {
+        Rectangle minimumOne = null;
+        if (rectangles != null) {
+            for (Rectangle rectangle : rectangles) {
+                if (minimumOne == null || rectangle.x < minimumOne.x) {
+                    minimumOne = rectangle;
+                }
+            }
+        }
+        return minimumOne;
+    }
+
+    public static Rectangle findMinimumY(List<Rectangle> rectangles) {
+        Rectangle minimumOne = null;
+        if (rectangles != null) {
+            for (Rectangle rectangle : rectangles) {
+                if (minimumOne == null || rectangle.y < minimumOne.y) {
+                    minimumOne = rectangle;
+                }
+            }
+        }
+        return minimumOne;
     }
 
     public static void updateNotCollideRectPosition(Rectangle notCollideRect, Tile collisionTile, CollisionType collisionType) {
