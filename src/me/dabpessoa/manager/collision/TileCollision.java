@@ -71,7 +71,7 @@ public class TileCollision {
         } else if (collisionType == CollisionType.TOP || collisionType == CollisionType.BOTTOM) {
             from = fromPoint.x;
             to = toPoint.x;
-        }
+        } else throw new RuntimeException("Invalid Collision Type => "+collisionType);
 
         while (from <= to) {
             Point point  = (collisionType == CollisionType.LEFT || collisionType == CollisionType.RIGHT ? new Point(fromPoint.x, from) :
