@@ -127,181 +127,297 @@ public class TileCollision {
             Point bottomLeft = new Point(rect.x, (rect.y + rect.height -1));
             Point bottomRight = new Point((rect.x + rect.width - 1), (rect.y + rect.height -1));
 
-            // Colidiu em uma quina do mapa.
-            if (tileCollisionInfo.hasAllSidesCollision()) {
+            if (movimentDirection.isGoingToLeft()) {
 
-                List<Tile> biggestFirst = tileCollisionInfo.findBiggestTilesSizeCollisionSide(1);
-                List<Tile> biggestSecond = tileCollisionInfo.findBiggestTilesSizeCollisionSide(2);
+                if (tileCollisionInfo.hasLeftCollision()) {
 
-                if (biggestFirst.equals(tileCollisionInfo.getTopTilesCollision())) {
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
-                } else if (biggestFirst.equals(tileCollisionInfo.getRightTilesCollision())) {
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
-                } else if (biggestFirst.equals(tileCollisionInfo.getBottomTilesCollision())) {
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
-                } else if (biggestFirst.equals(tileCollisionInfo.getLeftTilesCollision())) {
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
+                    boolean isRealGoingLeftCollision = true;
+
+                    if (tileCollisionInfo.hasTopCollision()) {
+                        Tile biggestTileLeftY =  findBiggestTileY(tileCollisionInfo.getLeftTilesCollision());
+                        if (biggestTileLeftY != null) {
+                            if (biggestTileLeftY.getPixelY() <= tileCollisionInfo.getTopTilesCollision().get(0).getPixelY()) {
+                                isRealGoingLeftCollision = false;
+                            }
+                        }
+                    } else if (tileCollisionInfo.hasBottomCollision()) {
+                        Tile minimumTileLeftY =  findMinimumTileY(tileCollisionInfo.getLeftTilesCollision());
+                        if (minimumTileLeftY != null) {
+                            if (minimumTileLeftY.getPixelY() >= tileCollisionInfo.getBottomTilesCollision().get(0).getPixelY()) {
+                                isRealGoingLeftCollision = false;
+                            }
+                        }
+                    }
+
+                    if (isRealGoingLeftCollision) {
+                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
+                    }
+
                 }
 
-                if (biggestSecond.equals(tileCollisionInfo.getTopTilesCollision())) {
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
-                } else if (biggestSecond.equals(tileCollisionInfo.getRightTilesCollision())) {
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
-                } else if (biggestSecond.equals(tileCollisionInfo.getBottomTilesCollision())) {
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
-                } else if (biggestSecond.equals(tileCollisionInfo.getLeftTilesCollision())) {
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
-                }
+            } else if (movimentDirection.isGoingToRight()) {
 
-            } else {
+                if (tileCollisionInfo.hasRightCollision()) {
 
-                if ((tileCollisionInfo.hasTopRightCornerCollision() && tileCollisionInfo.hasBottomRightCornerCollision()) || tileCollisionInfo.hasOnlyRightCollision()) {
-                    // rightCollision_WALL
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
+                    boolean isRealGoingRightCollision = true;
 
-                    if (movimentDirection.isGoingToTop()) {
-                        Tile minimumTopX =  findMinimumTileX(tileCollisionInfo.getTopTilesCollision());
-                        if (minimumTopX != null) {
-                            if (minimumTopX.getPixelX() < tileCollisionInfo.getRightTilesCollision().get(0).getPixelX()) {
-                                // collisionTop
-                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+                    if (tileCollisionInfo.hasTopCollision()) {
+                        Tile biggestTileRightY =  findBiggestTileY(tileCollisionInfo.getRightTilesCollision());
+                        if (biggestTileRightY != null) {
+                            if (biggestTileRightY.getPixelY() <= tileCollisionInfo.getTopTilesCollision().get(0).getPixelY()) {
+                                isRealGoingRightCollision = false;
                             }
                         }
-                    } else if (movimentDirection.isGoingToBottom()) {
-                        Tile minimumTopX =  findMinimumTileX(tileCollisionInfo.getBottomTilesCollision());
-                        if (minimumTopX != null) {
-                            if (minimumTopX.getPixelX() < tileCollisionInfo.getRightTilesCollision().get(0).getPixelX()) {
-                                // collisionBottom
-                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
+                    } else if (tileCollisionInfo.hasBottomCollision()) {
+                        Tile minimumTileRightY =  findMinimumTileY(tileCollisionInfo.getRightTilesCollision());
+                        if (minimumTileRightY != null) {
+                            if (minimumTileRightY.getPixelY() >= tileCollisionInfo.getBottomTilesCollision().get(0).getPixelY()) {
+                                isRealGoingRightCollision = false;
                             }
                         }
                     }
 
-                } else if ((tileCollisionInfo.hasBottomLeftCornerCollision() && tileCollisionInfo.hasBottomRightCornerCollision()) || tileCollisionInfo.hasOnlyBottomCollision()) {
-                    // bottomCollision_WALL
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
-
-                    if (movimentDirection.isGoingToRight()) {
-                        Tile minimumRightY =  findMinimumTileY(tileCollisionInfo.getRightTilesCollision());
-                        if (minimumRightY != null) {
-                            if (minimumRightY.getPixelY() < tileCollisionInfo.getBottomTilesCollision().get(0).getPixelY()) {
-                                // collisionRight
-                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
-                            }
-                        }
-                    } else if (movimentDirection.isGoingToLeft()) {
-                        Tile minimumRightY =  findMinimumTileY(tileCollisionInfo.getLeftTilesCollision());
-                        if (minimumRightY != null) {
-                            if (minimumRightY.getPixelY() < tileCollisionInfo.getBottomTilesCollision().get(0).getPixelY()) {
-                                // collisionLeft
-                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
-                            }
-                        }
-                    }
-
-                } else if ((tileCollisionInfo.hasBottomLeftCornerCollision() && tileCollisionInfo.hasTopLeftCornerCollision()) || tileCollisionInfo.hasOnlyLeftCollision()) {
-                    // leftCollision_WALL
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
-
-                    if (movimentDirection.isGoingToTop()) {
-                        Tile biggestTopX =  findBiggestTileX(tileCollisionInfo.getTopTilesCollision());
-                        if (biggestTopX != null) {
-                            if (biggestTopX.getPixelX() > tileCollisionInfo.getLeftTilesCollision().get(0).getPixelX()) {
-                                // collisionTop
-                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
-                            }
-                        }
-                    } else if (movimentDirection.isGoingToBottom()) {
-                        Tile biggestBottomX =  findBiggestTileX(tileCollisionInfo.getBottomTilesCollision());
-                        if (biggestBottomX != null) {
-                            if (biggestBottomX.getPixelX() > tileCollisionInfo.getLeftTilesCollision().get(0).getPixelX()) {
-                                // collisionTop
-                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
-                            }
-                        }
-                    }
-
-                } else if ((tileCollisionInfo.hasTopLeftCornerCollision() && tileCollisionInfo.hasTopRightCornerCollision()) || tileCollisionInfo.hasOnlyTopCollision()) {
-                    // topCollision_WALL
-                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
-
-                    if (movimentDirection.isGoingToRight()) {
-                        Tile biggestRightY =  findBiggestTileY(tileCollisionInfo.getRightTilesCollision());
-                        if (biggestRightY != null) {
-                            if (biggestRightY.getPixelY() > tileCollisionInfo.getTopTilesCollision().get(0).getPixelY()) {
-                                // collisionRight
-                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
-                            }
-                        }
-                    } else if (movimentDirection.isGoingToLeft()) {
-                        Tile biggestRightY =  findBiggestTileY(tileCollisionInfo.getLeftTilesCollision());
-                        if (biggestRightY != null) {
-                            if (biggestRightY.getPixelY() > tileCollisionInfo.getTopTilesCollision().get(0).getPixelY()) {
-                                // collisionLeft
-                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
-                            }
-                        }
-                    }
-
-                }  else if (tileCollisionInfo.hasOnlyTopRightCornerCollision()) {
-
-                    // topRight_CORNER
-                    Tile tileCollision = tileCollisionInfo.getTopTilesCollision().get(0);
-                    int diffX = topRight.x - tileCollision.getPixelX();
-                    int diffY = (tileCollision.getPixelY() + tileCollision.getHeight() -1) - topRight.y;
-                    if (diffX < diffY) {
-                        // collide right
+                    if (isRealGoingRightCollision) {
                         updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
-                    } else {
-                        // collide top
+                    }
+
+                }
+
+            }
+
+            if (movimentDirection.isGoingToTop()) {
+
+                if (tileCollisionInfo.hasTopCollision()) {
+
+                    boolean isRealGoingTopCollision = true;
+
+                    if (tileCollisionInfo.hasLeftCollision()) {
+                        Tile biggestTileTopX =  findBiggestTileX(tileCollisionInfo.getTopTilesCollision());
+                        if (biggestTileTopX != null) {
+                            if (biggestTileTopX.getPixelX() <= tileCollisionInfo.getLeftTilesCollision().get(0).getPixelX()) {
+                                isRealGoingTopCollision = false;
+                            }
+                        }
+                    } else if (tileCollisionInfo.hasRightCollision()) {
+                        Tile minimumTileTopX =  findMinimumTileX(tileCollisionInfo.getTopTilesCollision());
+                        if (minimumTileTopX != null) {
+                            if (minimumTileTopX.getPixelX() >= tileCollisionInfo.getRightTilesCollision().get(0).getPixelX()) {
+                                isRealGoingTopCollision = false;
+                            }
+                        }
+                    }
+
+                    if (isRealGoingTopCollision) {
                         updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
                     }
 
-                } else if (tileCollisionInfo.hasOnlyTopLeftCornerCollilsion()) {
+                }
 
-                    // topLeft_CORNER
-                    Tile tileCollision = tileCollisionInfo.getTopTilesCollision().get(0);
-                    int diffX = (tileCollision.getPixelX() + tileCollision.getWidth() - 1) - topLeft.x;
-                    int diffY = (tileCollision.getPixelY() + tileCollision.getHeight() -1) - topRight.y;
-                    if (diffX < diffY) {
-                        // collide left
-                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
-                    } else {
-                        // collide top
-                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+            } else if (movimentDirection.isGoingToBottom()) {
+
+                if (tileCollisionInfo.hasBottomCollision()) {
+
+                    boolean isRealGoingBottomCollision = true;
+
+                    if (tileCollisionInfo.hasLeftCollision()) {
+                        Tile biggestTileBottomX =  findBiggestTileX(tileCollisionInfo.getBottomTilesCollision());
+                        if (biggestTileBottomX != null) {
+                            if (biggestTileBottomX.getPixelX() <= tileCollisionInfo.getLeftTilesCollision().get(0).getPixelX()) {
+                                isRealGoingBottomCollision = false;
+                            }
+                        }
+                    } else if (tileCollisionInfo.hasRightCollision()) {
+                        Tile minimumTileBottomX =  findMinimumTileX(tileCollisionInfo.getBottomTilesCollision());
+                        if (minimumTileBottomX != null) {
+                            if (minimumTileBottomX.getPixelX() >= tileCollisionInfo.getRightTilesCollision().get(0).getPixelX()) {
+                                isRealGoingBottomCollision = false;
+                            }
+                        }
                     }
 
-                } else if (tileCollisionInfo.hasOnlyBottomRightCornerCollision()) {
-
-                    // bottomRight_CONER
-                    Tile tileCollision = tileCollisionInfo.getBottomTilesCollision().get(0);
-                    int diffX = bottomRight.x - tileCollision.getPixelX();
-                    int diffY = bottomRight.y - tileCollision.getPixelY();
-                    if (diffX < diffY) {
-                        // collide right
-                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
-                    } else {
-                        // collide bottom
-                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
-                    }
-
-                } else if (tileCollisionInfo.hasOnlyBottomLeftCornerCollision()) {
-
-                    // bottomLeft_CORNER
-                    Tile tileCollision = tileCollisionInfo.getBottomTilesCollision().get(0);
-                    int diffX = (tileCollision.getPixelX() + tileCollision.getWidth() - 1) - bottomLeft.x;
-                    int diffY = bottomLeft.y - tileCollision.getPixelY();
-                    if (diffX < diffY) {
-                        // collide left
-                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
-                    } else {
-                        // collide bottom
+                    if (isRealGoingBottomCollision) {
                         updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
                     }
 
                 }
 
             }
+
+//            // Colidiu em uma quina do mapa.
+//            if (tileCollisionInfo.hasAllSidesCollision()) {
+//
+//                List<Tile> biggestFirst = tileCollisionInfo.findBiggestTilesSizeCollisionSide(1);
+//                List<Tile> biggestSecond = tileCollisionInfo.findBiggestTilesSizeCollisionSide(2);
+//
+//                if (biggestFirst.equals(tileCollisionInfo.getTopTilesCollision())) {
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+//                } else if (biggestFirst.equals(tileCollisionInfo.getRightTilesCollision())) {
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
+//                } else if (biggestFirst.equals(tileCollisionInfo.getBottomTilesCollision())) {
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
+//                } else if (biggestFirst.equals(tileCollisionInfo.getLeftTilesCollision())) {
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
+//                }
+//
+//                if (biggestSecond.equals(tileCollisionInfo.getTopTilesCollision())) {
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+//                } else if (biggestSecond.equals(tileCollisionInfo.getRightTilesCollision())) {
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
+//                } else if (biggestSecond.equals(tileCollisionInfo.getBottomTilesCollision())) {
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
+//                } else if (biggestSecond.equals(tileCollisionInfo.getLeftTilesCollision())) {
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
+//                }
+//
+//            } else {
+//
+//                if ((tileCollisionInfo.hasTopRightCornerCollision() && tileCollisionInfo.hasBottomRightCornerCollision()) || tileCollisionInfo.hasOnlyRightCollision()) {
+//                    // rightCollision_WALL
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
+//
+//                    if (movimentDirection.isGoingToTop()) {
+//                        Tile minimumTopX =  findMinimumTileX(tileCollisionInfo.getTopTilesCollision());
+//                        if (minimumTopX != null) {
+//                            if (minimumTopX.getPixelX() < tileCollisionInfo.getRightTilesCollision().get(0).getPixelX()) {
+//                                // collisionTop
+//                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+//                            }
+//                        }
+//                    } else if (movimentDirection.isGoingToBottom()) {
+//                        Tile minimumTopX =  findMinimumTileX(tileCollisionInfo.getBottomTilesCollision());
+//                        if (minimumTopX != null) {
+//                            if (minimumTopX.getPixelX() < tileCollisionInfo.getRightTilesCollision().get(0).getPixelX()) {
+//                                // collisionBottom
+//                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
+//                            }
+//                        }
+//                    }
+//
+//                } else if ((tileCollisionInfo.hasBottomLeftCornerCollision() && tileCollisionInfo.hasBottomRightCornerCollision()) || tileCollisionInfo.hasOnlyBottomCollision()) {
+//                    // bottomCollision_WALL
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
+//
+//                    if (movimentDirection.isGoingToRight()) {
+//                        Tile minimumRightY =  findMinimumTileY(tileCollisionInfo.getRightTilesCollision());
+//                        if (minimumRightY != null) {
+//                            if (minimumRightY.getPixelY() < tileCollisionInfo.getBottomTilesCollision().get(0).getPixelY()) {
+//                                // collisionRight
+//                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
+//                            }
+//                        }
+//                    } else if (movimentDirection.isGoingToLeft()) {
+//                        Tile minimumRightY =  findMinimumTileY(tileCollisionInfo.getLeftTilesCollision());
+//                        if (minimumRightY != null) {
+//                            if (minimumRightY.getPixelY() < tileCollisionInfo.getBottomTilesCollision().get(0).getPixelY()) {
+//                                // collisionLeft
+//                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
+//                            }
+//                        }
+//                    }
+//
+//                } else if ((tileCollisionInfo.hasBottomLeftCornerCollision() && tileCollisionInfo.hasTopLeftCornerCollision()) || tileCollisionInfo.hasOnlyLeftCollision()) {
+//                    // leftCollision_WALL
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
+//
+//                    if (movimentDirection.isGoingToTop()) {
+//                        Tile biggestTopX =  findBiggestTileX(tileCollisionInfo.getTopTilesCollision());
+//                        if (biggestTopX != null) {
+//                            if (biggestTopX.getPixelX() > tileCollisionInfo.getLeftTilesCollision().get(0).getPixelX()) {
+//                                // collisionTop
+//                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+//                            }
+//                        }
+//                    } else if (movimentDirection.isGoingToBottom()) {
+//                        Tile biggestBottomX =  findBiggestTileX(tileCollisionInfo.getBottomTilesCollision());
+//                        if (biggestBottomX != null) {
+//                            if (biggestBottomX.getPixelX() > tileCollisionInfo.getLeftTilesCollision().get(0).getPixelX()) {
+//                                // collisionTop
+//                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
+//                            }
+//                        }
+//                    }
+//
+//                } else if ((tileCollisionInfo.hasTopLeftCornerCollision() && tileCollisionInfo.hasTopRightCornerCollision()) || tileCollisionInfo.hasOnlyTopCollision()) {
+//                    // topCollision_WALL
+//                    updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+//
+//                    if (movimentDirection.isGoingToRight()) {
+//                        Tile biggestRightY =  findBiggestTileY(tileCollisionInfo.getRightTilesCollision());
+//                        if (biggestRightY != null) {
+//                            if (biggestRightY.getPixelY() > tileCollisionInfo.getTopTilesCollision().get(0).getPixelY()) {
+//                                // collisionRight
+//                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
+//                            }
+//                        }
+//                    } else if (movimentDirection.isGoingToLeft()) {
+//                        Tile biggestRightY =  findBiggestTileY(tileCollisionInfo.getLeftTilesCollision());
+//                        if (biggestRightY != null) {
+//                            if (biggestRightY.getPixelY() > tileCollisionInfo.getTopTilesCollision().get(0).getPixelY()) {
+//                                // collisionLeft
+//                                updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
+//                            }
+//                        }
+//                    }
+//
+//                }  else if (tileCollisionInfo.hasOnlyTopRightCornerCollision()) {
+//
+//                    // topRight_CORNER
+//                    Tile tileCollision = tileCollisionInfo.getTopTilesCollision().get(0);
+//                    int diffX = topRight.x - tileCollision.getPixelX();
+//                    int diffY = (tileCollision.getPixelY() + tileCollision.getHeight() -1) - topRight.y;
+//                    if (diffX < diffY) {
+//                        // collide right
+//                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
+//                    } else {
+//                        // collide top
+//                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+//                    }
+//
+//                } else if (tileCollisionInfo.hasOnlyTopLeftCornerCollilsion()) {
+//
+//                    // topLeft_CORNER
+//                    Tile tileCollision = tileCollisionInfo.getTopTilesCollision().get(0);
+//                    int diffX = (tileCollision.getPixelX() + tileCollision.getWidth() - 1) - topLeft.x;
+//                    int diffY = (tileCollision.getPixelY() + tileCollision.getHeight() -1) - topRight.y;
+//                    if (diffX < diffY) {
+//                        // collide left
+//                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
+//                    } else {
+//                        // collide top
+//                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getTopTilesCollision().get(0), CollisionType.TOP);
+//                    }
+//
+//                } else if (tileCollisionInfo.hasOnlyBottomRightCornerCollision()) {
+//
+//                    // bottomRight_CONER
+//                    Tile tileCollision = tileCollisionInfo.getBottomTilesCollision().get(0);
+//                    int diffX = bottomRight.x - tileCollision.getPixelX();
+//                    int diffY = bottomRight.y - tileCollision.getPixelY();
+//                    if (diffX < diffY) {
+//                        // collide right
+//                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getRightTilesCollision().get(0), CollisionType.RIGHT);
+//                    } else {
+//                        // collide bottom
+//                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
+//                    }
+//
+//                } else if (tileCollisionInfo.hasOnlyBottomLeftCornerCollision()) {
+//
+//                    // bottomLeft_CORNER
+//                    Tile tileCollision = tileCollisionInfo.getBottomTilesCollision().get(0);
+//                    int diffX = (tileCollision.getPixelX() + tileCollision.getWidth() - 1) - bottomLeft.x;
+//                    int diffY = bottomLeft.y - tileCollision.getPixelY();
+//                    if (diffX < diffY) {
+//                        // collide left
+//                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getLeftTilesCollision().get(0), CollisionType.LEFT);
+//                    } else {
+//                        // collide bottom
+//                        updateNotCollideRectPosition(tileCollisionInfo.getNotCollideRect(), tileCollisionInfo.getBottomTilesCollision().get(0), CollisionType.BOTTOM);
+//                    }
+//
+//                }
+//
+//            }
 
         }
     }
