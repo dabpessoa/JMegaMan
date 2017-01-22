@@ -5,6 +5,7 @@ import me.dabpessoa.util.ListUtils;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -158,7 +159,15 @@ public class TileCollisionInfo {
     }
 
     public List<Tile> getBottomTilesCollision() {
-        return Collections.unmodifiableList(bottomTilesCollision);
+        return getBottomTilesCollisionWithout(null);
+    }
+
+    public List<Tile> getBottomTilesCollisionWithout(Tile... tiles) {
+        List<Tile> bottomTiles =  Collections.unmodifiableList(bottomTilesCollision);
+        if (tiles == null || tiles.length == 0) return bottomTiles;
+        List<Tile> returnTiles = new ArrayList<Tile>(bottomTiles);
+        returnTiles.removeAll(Arrays.asList(tiles));
+        return returnTiles;
     }
 
     public List<Tile> getLeftTilesCollision() {

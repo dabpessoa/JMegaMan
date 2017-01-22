@@ -136,14 +136,16 @@ public class TileCollision {
                     if (tileCollisionInfo.hasTopCollision()) {
                         Tile biggestTileLeftY =  findBiggestTileY(tileCollisionInfo.getLeftTilesCollision());
                         if (biggestTileLeftY != null) {
-                            if (biggestTileLeftY.getPixelY() <= tileCollisionInfo.getTopTilesCollision().get(0).getPixelY()) {
+                            List<Tile> topTiles = tileCollisionInfo.getBottomTilesCollisionWithout(biggestTileLeftY);
+                            if (!topTiles.isEmpty() && biggestTileLeftY.getPixelY() <= topTiles.get(0).getPixelY()) {
                                 isRealGoingLeftCollision = false;
                             }
                         }
                     } else if (tileCollisionInfo.hasBottomCollision()) {
                         Tile minimumTileLeftY =  findMinimumTileY(tileCollisionInfo.getLeftTilesCollision());
                         if (minimumTileLeftY != null) {
-                            if (minimumTileLeftY.getPixelY() >= tileCollisionInfo.getBottomTilesCollision().get(0).getPixelY()) {
+                            List<Tile> bottomTiles = tileCollisionInfo.getBottomTilesCollisionWithout(minimumTileLeftY);
+                            if (!bottomTiles.isEmpty() && minimumTileLeftY.getPixelY() >= bottomTiles.get(0).getPixelY()) {
                                 isRealGoingLeftCollision = false;
                             }
                         }
@@ -164,14 +166,16 @@ public class TileCollision {
                     if (tileCollisionInfo.hasTopCollision()) {
                         Tile biggestTileRightY =  findBiggestTileY(tileCollisionInfo.getRightTilesCollision());
                         if (biggestTileRightY != null) {
-                            if (biggestTileRightY.getPixelY() <= tileCollisionInfo.getTopTilesCollision().get(0).getPixelY()) {
+                            List<Tile> topTiles = tileCollisionInfo.getBottomTilesCollisionWithout(biggestTileRightY);
+                            if (!topTiles.isEmpty() && biggestTileRightY.getPixelY() <= topTiles.get(0).getPixelY()) {
                                 isRealGoingRightCollision = false;
                             }
                         }
                     } else if (tileCollisionInfo.hasBottomCollision()) {
                         Tile minimumTileRightY =  findMinimumTileY(tileCollisionInfo.getRightTilesCollision());
                         if (minimumTileRightY != null) {
-                            if (minimumTileRightY.getPixelY() >= tileCollisionInfo.getBottomTilesCollision().get(0).getPixelY()) {
+                            List<Tile> bottomTiles = tileCollisionInfo.getBottomTilesCollisionWithout(minimumTileRightY);
+                            if (!bottomTiles.isEmpty() && minimumTileRightY.getPixelY() >= bottomTiles.get(0).getPixelY()) {
                                 isRealGoingRightCollision = false;
                             }
                         }
@@ -194,14 +198,16 @@ public class TileCollision {
                     if (tileCollisionInfo.hasLeftCollision()) {
                         Tile biggestTileTopX =  findBiggestTileX(tileCollisionInfo.getTopTilesCollision());
                         if (biggestTileTopX != null) {
-                            if (biggestTileTopX.getPixelX() <= tileCollisionInfo.getLeftTilesCollision().get(0).getPixelX()) {
+                            List<Tile> leftTiles = tileCollisionInfo.getBottomTilesCollisionWithout(biggestTileTopX);
+                            if (!leftTiles.isEmpty() && biggestTileTopX.getPixelX() <= leftTiles.get(0).getPixelX()) {
                                 isRealGoingTopCollision = false;
                             }
                         }
                     } else if (tileCollisionInfo.hasRightCollision()) {
                         Tile minimumTileTopX =  findMinimumTileX(tileCollisionInfo.getTopTilesCollision());
                         if (minimumTileTopX != null) {
-                            if (minimumTileTopX.getPixelX() >= tileCollisionInfo.getRightTilesCollision().get(0).getPixelX()) {
+                            List<Tile> rightTiles = tileCollisionInfo.getBottomTilesCollisionWithout(minimumTileTopX);
+                            if (!rightTiles.isEmpty() && minimumTileTopX.getPixelX() >= rightTiles.get(0).getPixelX()) {
                                 isRealGoingTopCollision = false;
                             }
                         }
@@ -222,14 +228,16 @@ public class TileCollision {
                     if (tileCollisionInfo.hasLeftCollision()) {
                         Tile biggestTileBottomX =  findBiggestTileX(tileCollisionInfo.getBottomTilesCollision());
                         if (biggestTileBottomX != null) {
-                            if (biggestTileBottomX.getPixelX() <= tileCollisionInfo.getLeftTilesCollision().get(0).getPixelX()) {
+                            List<Tile> leftTiles = tileCollisionInfo.getBottomTilesCollisionWithout(biggestTileBottomX);
+                            if (!leftTiles.isEmpty() && biggestTileBottomX.getPixelX() <= leftTiles.get(0).getPixelX()) {
                                 isRealGoingBottomCollision = false;
                             }
                         }
                     } else if (tileCollisionInfo.hasRightCollision()) {
                         Tile minimumTileBottomX =  findMinimumTileX(tileCollisionInfo.getBottomTilesCollision());
                         if (minimumTileBottomX != null) {
-                            if (minimumTileBottomX.getPixelX() >= tileCollisionInfo.getRightTilesCollision().get(0).getPixelX()) {
+                            List<Tile> rightTiles = tileCollisionInfo.getBottomTilesCollisionWithout(minimumTileBottomX);
+                            if (!rightTiles.isEmpty() && minimumTileBottomX.getPixelX() >= rightTiles.get(0).getPixelX()) {
                                 isRealGoingBottomCollision = false;
                             }
                         }
