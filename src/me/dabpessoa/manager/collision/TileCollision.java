@@ -136,7 +136,7 @@ public class TileCollision {
                     if (tileCollisionInfo.hasTopCollision()) {
                         Tile biggestTileLeftY =  findBiggestTileY(tileCollisionInfo.getLeftTilesCollision());
                         if (biggestTileLeftY != null) {
-                            List<Tile> topTiles = tileCollisionInfo.getBottomTilesCollisionWithout(biggestTileLeftY);
+                            List<Tile> topTiles = tileCollisionInfo.getTopTilesCollisionWithout(biggestTileLeftY);
                             if (!topTiles.isEmpty() && biggestTileLeftY.getPixelY() <= topTiles.get(0).getPixelY()) {
                                 isRealGoingLeftCollision = false;
                             }
@@ -166,7 +166,7 @@ public class TileCollision {
                     if (tileCollisionInfo.hasTopCollision()) {
                         Tile biggestTileRightY =  findBiggestTileY(tileCollisionInfo.getRightTilesCollision());
                         if (biggestTileRightY != null) {
-                            List<Tile> topTiles = tileCollisionInfo.getBottomTilesCollisionWithout(biggestTileRightY);
+                            List<Tile> topTiles = tileCollisionInfo.getTopTilesCollisionWithout(biggestTileRightY);
                             if (!topTiles.isEmpty() && biggestTileRightY.getPixelY() <= topTiles.get(0).getPixelY()) {
                                 isRealGoingRightCollision = false;
                             }
@@ -198,7 +198,7 @@ public class TileCollision {
                     if (tileCollisionInfo.hasLeftCollision()) {
                         Tile biggestTileTopX =  findBiggestTileX(tileCollisionInfo.getTopTilesCollision());
                         if (biggestTileTopX != null) {
-                            List<Tile> leftTiles = tileCollisionInfo.getBottomTilesCollisionWithout(biggestTileTopX);
+                            List<Tile> leftTiles = tileCollisionInfo.getLeftTilesCollisionWithout(biggestTileTopX);
                             if (!leftTiles.isEmpty() && biggestTileTopX.getPixelX() <= leftTiles.get(0).getPixelX()) {
                                 isRealGoingTopCollision = false;
                             }
@@ -206,7 +206,7 @@ public class TileCollision {
                     } else if (tileCollisionInfo.hasRightCollision()) {
                         Tile minimumTileTopX =  findMinimumTileX(tileCollisionInfo.getTopTilesCollision());
                         if (minimumTileTopX != null) {
-                            List<Tile> rightTiles = tileCollisionInfo.getBottomTilesCollisionWithout(minimumTileTopX);
+                            List<Tile> rightTiles = tileCollisionInfo.getRightTilesCollisionWithout(minimumTileTopX);
                             if (!rightTiles.isEmpty() && minimumTileTopX.getPixelX() >= rightTiles.get(0).getPixelX()) {
                                 isRealGoingTopCollision = false;
                             }
@@ -228,7 +228,7 @@ public class TileCollision {
                     if (tileCollisionInfo.hasLeftCollision()) {
                         Tile biggestTileBottomX =  findBiggestTileX(tileCollisionInfo.getBottomTilesCollision());
                         if (biggestTileBottomX != null) {
-                            List<Tile> leftTiles = tileCollisionInfo.getBottomTilesCollisionWithout(biggestTileBottomX);
+                            List<Tile> leftTiles = tileCollisionInfo.getLeftTilesCollisionWithout(biggestTileBottomX);
                             if (!leftTiles.isEmpty() && biggestTileBottomX.getPixelX() <= leftTiles.get(0).getPixelX()) {
                                 isRealGoingBottomCollision = false;
                             }
@@ -236,7 +236,7 @@ public class TileCollision {
                     } else if (tileCollisionInfo.hasRightCollision()) {
                         Tile minimumTileBottomX =  findMinimumTileX(tileCollisionInfo.getBottomTilesCollision());
                         if (minimumTileBottomX != null) {
-                            List<Tile> rightTiles = tileCollisionInfo.getBottomTilesCollisionWithout(minimumTileBottomX);
+                            List<Tile> rightTiles = tileCollisionInfo.getRightTilesCollisionWithout(minimumTileBottomX);
                             if (!rightTiles.isEmpty() && minimumTileBottomX.getPixelX() >= rightTiles.get(0).getPixelX()) {
                                 isRealGoingBottomCollision = false;
                             }

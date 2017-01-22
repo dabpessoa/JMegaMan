@@ -4,6 +4,7 @@ import me.dabpessoa.map.Tile;
 import me.dabpessoa.util.ListUtils;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -155,7 +156,12 @@ public class TileCollisionInfo {
     }
 
     public List<Tile> getRightTilesCollision() {
-        return Collections.unmodifiableList(rightTilesCollision);
+        return getRightTilesCollisionWithout(null);
+    }
+
+    public List<Tile> getRightTilesCollisionWithout(Tile... tiles) {
+        List<Tile> rightTiles = Collections.unmodifiableList(rightTilesCollision);
+        return getTilesWithout(rightTiles, tiles);
     }
 
     public List<Tile> getBottomTilesCollision() {
@@ -163,19 +169,26 @@ public class TileCollisionInfo {
     }
 
     public List<Tile> getBottomTilesCollisionWithout(Tile... tiles) {
-        List<Tile> bottomTiles =  Collections.unmodifiableList(bottomTilesCollision);
-        if (tiles == null || tiles.length == 0) return bottomTiles;
-        List<Tile> returnTiles = new ArrayList<Tile>(bottomTiles);
-        returnTiles.removeAll(Arrays.asList(tiles));
-        return returnTiles;
+        List<Tile> bottomTiles = Collections.unmodifiableList(bottomTilesCollision);
+        return getTilesWithout(bottomTiles, tiles);
     }
 
     public List<Tile> getLeftTilesCollision() {
-        return Collections.unmodifiableList(leftTilesCollision);
+        return getLeftTilesCollisionWithout(null);
+    }
+
+    public List<Tile> getLeftTilesCollisionWithout(Tile... tiles) {
+        List<Tile> leftTiles = Collections.unmodifiableList(leftTilesCollision);
+        return getTilesWithout(leftTiles, tiles);
     }
 
     public List<Tile> getTopTilesCollision() {
-        return Collections.unmodifiableList(topTilesCollision);
+        return getTopTilesCollisionWithout(null);
+    }
+
+    public List<Tile> getTopTilesCollisionWithout(Tile... tiles) {
+        List<Tile> topTiles = Collections.unmodifiableList(topTilesCollision);
+        return getTilesWithout(topTiles, tiles);
     }
 
     public Rectangle getNotCollideRect() {
@@ -184,6 +197,19 @@ public class TileCollisionInfo {
 
     public void setNotCollideRect(Rectangle notCollideRect) {
         this.notCollideRect = notCollideRect;
+    }
+
+    private List<Tile> getTilesWithout(List<Tile> originalTileList, Tile... tilesToRemove) {
+        if (tilesToRemove == null || tilesToRemove.length == 0) return originalTileList;
+        return getTilesWithout(originalTileList, Arrays.asList(tilesToRemove));
+    }
+
+    private List<Tile> getTilesWithout(List<Tile> originalTileList, List<Tile> tilesToRemove) {
+        if (originalTileList == null) return null;
+        if (tilesToRemove == null) return originalTileList;
+        List<Tile> returnTiles = new ArrayList<Tile>(originalTileList);
+        returnTiles.removeAll(tilesToRemove);
+        return returnTiles;
     }
 
 }
