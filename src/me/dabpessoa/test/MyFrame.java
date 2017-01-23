@@ -17,7 +17,7 @@ public class MyFrame extends JFrame {
 
           setSize(400, 400);
 
-          setVisible(true); 
+          setVisible(true);
      }
 
 

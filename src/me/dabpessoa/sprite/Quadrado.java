@@ -30,8 +30,8 @@ public class Quadrado extends Sprite {
         float novaPosicaoX = getX() + (getVelocityX() * elapsedTime);
         float novaPosicaoY = getY() + (getVelocityY() * elapsedTime);
 
-        boolean colisaoX = getWorld().getTileMap().getSpriteTileCollisionPoint(this, novaPosicaoX, getY()) != null;
-        boolean colisaoY = getWorld().getTileMap().getSpriteTileCollisionPoint(this, getX(), novaPosicaoY) != null;
+//        boolean colisaoX = getWorld().getTileMap().getSpriteTileCollisionPoint(this, novaPosicaoX, getY()) != null;
+//        boolean colisaoY = getWorld().getTileMap().getSpriteTileCollisionPoint(this, getX(), novaPosicaoY) != null;
 
         MovimentDirection movimentDirection = MovimentDirection.findMovimentDirection(new Point(Math.round(getX()), Math.round(getY())), new Point(Math.round(novaPosicaoX), Math.round(novaPosicaoY)));
         Rectangle rect = new Rectangle(Math.round(novaPosicaoX), Math.round(novaPosicaoY), getAnimation().getImage().getWidth(null), getAnimation().getImage().getHeight(null));
